@@ -1,6 +1,6 @@
 function header() {
     $.ajax({
-        url: "../view/_header.html",
+        url: "_header.html",
         cache: false,
         success: function(html){
             document.write(html);
