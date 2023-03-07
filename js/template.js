@@ -1,5 +1,5 @@
 function header() {
-    $.ajax({
+    $("#header").ajax({
         url: "./header.html",
         cache: false,
         success: function(html){
@@ -9,7 +9,7 @@ function header() {
 }
 
 function footer() {
-    $.ajax({
+    $("#footer").ajax({
         url: "./footer.html",
         cache: false,
         success: function(html){
