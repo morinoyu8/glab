@@ -1,11 +1,5 @@
 function header() {
-    $("#header").ajax({
-        url: "./header.html",
-        cache: false,
-        success: function(html){
-            document.write(html);
-        }
-    });
+    $("#header").load("./header.html");
 }
 
 function footer() {
