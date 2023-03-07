@@ -1,5 +1,5 @@
 function header() {
-    $("#header").load("./header.html");
+    $("#header").load("./../header.html");
 }
 
 function footer() {
