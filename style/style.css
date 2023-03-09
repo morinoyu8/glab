@@ -1,6 +1,7 @@
 :root {
     --main-color: #17a54b;
     --background-color: #f4f4f4;
+    --header-subcolor: #bce8a9;
 }
 
 body {
@@ -54,28 +55,91 @@ header{
     list-style: none;
 }
 
-.header-item {
+.header-list li {
     margin-right: 60px;
 }
 
-.header-text {
-    color: #bce8a9;
+.header-list li a {
+    color: var(--header-subcolor);
     font-size: 13pt;
     font-weight: 400;
     padding-top: 0;
     line-height: 32px;
 }
 
-.header-text:hover {
+.header-list li a:hover {
     color: white;
     text-decoration: none;
 }
 
 /* header for smartphone */
 
+@media screen and (min-width:720px) {
+    .hamburger {
+        display: none;
+    }
+}
+
 @media screen and (max-width:720px) {
     .header-list {
         display: none;
+    }
+
+    .hamburger {
+        position: relative;
+        display: block;
+        width: 25px;
+        height: 25px;
+        margin: auto 30px auto 0;
+    }
+
+    .hamburger:hover {
+        cursor: pointer;
+    }
+
+    .hamburger:hover span {
+        background-color: white;
+    }
+
+    .hamburger span {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 2.5px;
+        background-color: var(--header-subcolor);
+        /* transform: translateY(-50%); */
+    }
+
+    .hamburger::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 20%;
+        left: 0;
+        width: 100%;
+        height: 2.2px;
+        background-color: var(--header-subcolor);
+    }
+
+    .hamburger:hover::before {
+        background-color: white;
+    }
+
+    .hamburger::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 80%;
+        left: 0;
+        width: 100%;
+        height: 2.2px;
+        background-color: var(--header-subcolor);
+    }
+
+    .hamburger:hover::after {
+        background-color: white;
     }
 }
 
