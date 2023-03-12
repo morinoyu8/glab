@@ -1,19 +1,14 @@
-if (location.href.indexOf("https://morinoyu8.github.io") < 0) {
-    $("#header").load("/templete/header.html");
-    $("#footer").load("/templete/footer.html");
-    $("#jc").load("/main/journal-club.html");
-    $("#it").load("/main/intro-thesis.html");
-    $("#pr").load("/main/progress-report.html");
-    $("#lt").load("/main/lt.html");
-    var title = document.getElementById("title");
-    title.href = "/";
-} else {
-    $("#header").load("/glab/templete/header.html");
-    $("#footer").load("/glab/templete/footer.html");
-    $("#jc").load("/glab/main/journal-club.html");
-    $("#it").load("/glab/main/intro-thesis.html");
-    $("#pr").load("/glab/main/progress-report.html");
-    $("#lt").load("/glab/main/lt.html");
-    var title = document.getElementById("title");
-    title.href = "/glab";
+var urlHeader = ""
+if (location.href.indexOf("https://morinoyu8.github.io") >= 0) {
+    urlHeader = "/glab";
 }
+
+$("#header").load(urlHeader + "/templete/header.html", function() {
+    var title = document.getElementById("title");
+    title.href = urlHeader + "/";
+});
+$("#footer").load(urlHeader + "/templete/footer.html");
+$("#jc").load(urlHeader + "/main/journal-club.html");
+$("#it").load(urlHeader + "/main/intro-thesis.html");
+$("#pr").load(urlHeader + "/main/progress-report.html");
+$("#lt").load(urlHeader + "/main/lt.html");
