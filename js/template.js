@@ -5,6 +5,8 @@ if (location.href.indexOf("https://morinoyu8.github.io") < 0) {
     $("#it").load("/main/intro-thesis.html");
     $("#pr").load("/main/progress-report.html");
     $("#lt").load("/main/lt.html");
+    var title = document.getElementById("title");
+    title.href = "/";
 } else {
     $("#header").load("/glab/templete/header.html");
     $("#footer").load("/glab/templete/footer.html");
@@ -12,4 +14,6 @@ if (location.href.indexOf("https://morinoyu8.github.io") < 0) {
     $("#it").load("/glab/main/intro-thesis.html");
     $("#pr").load("/glab/main/progress-report.html");
     $("#lt").load("/glab/main/lt.html");
+    var title = document.getElementById("title");
+    title.href = "/glab";
 }
