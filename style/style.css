@@ -7,21 +7,94 @@
 body {
     font-family: "YakuHanJPs","-apple-system","BlinkMacSystemFont","Segoe UI","Hiragino Sans","Hiragino Kaku Gothic ProN","Meiryo",sans-serif;
     background-color: var(--background-color);
+    margin: 0;
+}
+
+main {
+    margin: 30px auto 40px auto;
+    padding: 0 30px;
+    max-width: 800px;
+    text-align: center;
+}
+
+.main-item {
+    background-color: white;
+    border-radius: 10px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.item-inner {
+    padding: 35px 32px;
+}
+
+.item-inner-large {
+    padding: 10px 24px;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 28pt;
+    margin-top: 0;
+    margin-bottom: 60px;
+}
+
+h2 {
+    font-weight: 600;
+    font-size: 20pt;
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 6px;
+    margin-top: 50px;
+    margin-right: 10px;
+    line-height: 125%;
+}
+
+h3 {
+    font-weight: 600;
+    font-size: 18pt;
+    margin-top: 40px;
+    margin-bottom: 22px;
+    line-height: 130%;
+}
+
+h4 {
+    font-weight: 600;
+    font-size: 14pt;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    line-height: 140%;
 }
 
 a {
     color: var(--main-color);
     text-decoration: none;
+    margin: 2px 0;
+    line-height: 180%;
+    font-size: 12pt;
+    word-wrap: break-word;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
-p {
-    margin-top: 5px;
-    margin-bottom: 5px;
+p, h5, h6 {
+    margin: 2px 0;
+    line-height: 180%;
+    font-size: 12pt;
+    
 }
+
+ul {
+    padding-left: 50px;
+    padding-right: 30px;
+}
+
+li {
+    padding-bottom: 10px;
+}
+
+
 
 /* Header */
 
@@ -29,7 +102,7 @@ header{
     background-color: var(--main-color);
     width: 100%;
     height: 60px;
-    position: fixed;
+    /* position: fixed; */
     display: flex;
     justify-content: space-between;
     top: 0;
@@ -42,6 +115,7 @@ header{
     font-size: 24pt;
     color: white;
     font-weight: 600;
+    margin-top: 0;
     margin-left: 20px;
     line-height: 60px;
 }
@@ -53,6 +127,7 @@ header{
 .header-list {
     display: flex;
     list-style: none;
+    padding: 0;
 }
 
 .header-list li {
@@ -146,15 +221,6 @@ header{
 
 
 
-
-main {
-    margin: 50px auto 0 auto;
-    padding: 30px;
-    max-width: 900px;
-    text-align: center;
-}
-
-
 /* Main Page */
 
 .icon {
@@ -164,22 +230,30 @@ main {
 }
 
 .icon-name {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 20pt;
     margin: 10px;
+    line-height: normal;
 }
 
-.grid-parent {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+.main-list {
+    margin-top: 16px;
+    margin-bottom: 0;
+    padding-left: 40px;
 }
 
-.grid-item {
-    background-color: white;
-    border-radius: 10px;
-    text-align: left;
+.no-line-height {
+    line-height: normal;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0;
 }
+
+.no-under-line {
+    border-bottom: 0px solid;
+}
+
+
 
 .grid-title {
     font-weight: 700;
@@ -206,4 +280,23 @@ main {
 
 li.grid-text:last-child {
     padding-bottom: 5px;
+}
+
+
+
+
+.grid-parent {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.grid-item {
+    background-color: white;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.grid-inner {
+    margin: 30px 32px;
 }

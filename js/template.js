@@ -1,2 +1,3 @@
-$("#header").load("./html/header.html");
-$("#footer").load("./html/footer.html");
+$("#header").load("/templete/header.html");
+$("#footer").load("/templete/footer.html");
+$("#jc").load("/main/journal-club.html");
