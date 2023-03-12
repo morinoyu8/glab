@@ -147,6 +147,7 @@ header{
     text-decoration: none;
 }
 
+
 /* header for smartphone */
 
 @media screen and (min-width:720px) {
@@ -238,8 +239,23 @@ header{
 
 .main-list {
     margin-top: 16px;
-    margin-bottom: 0;
+    margin-bottom: 2px;
     padding-left: 40px;
+}
+
+.main-title {
+    line-height: normal;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0;
+    border-bottom: 0px solid;
+}
+
+.main-subtitle {
+    line-height: normal;
+    margin-top: 10px;
+    padding: 0;
+    border-bottom: 0px solid;
 }
 
 .no-line-height {
@@ -251,52 +267,4 @@ header{
 
 .no-under-line {
     border-bottom: 0px solid;
-}
-
-
-
-.grid-title {
-    font-weight: 700;
-    font-size: 20pt;
-    padding-top: 16px;
-    padding-left: 24px;
-}
-
-.grid-subtitle {
-    font-weight: 600;
-    font-size: 14pt;
-    padding-top: 12px;
-    padding-left: 24px;
-}
-
-.grid-list {
-    padding-left: 60px;
-    padding-right: 40px;
-}
-
-.grid-text {
-    padding-bottom: 10px;
-}
-
-li.grid-text:last-child {
-    padding-bottom: 5px;
-}
-
-
-
-
-.grid-parent {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-.grid-item {
-    background-color: white;
-    border-radius: 10px;
-    text-align: left;
-}
-
-.grid-inner {
-    margin: 30px 32px;
 }
