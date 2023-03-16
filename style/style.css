@@ -36,6 +36,24 @@ main {
     padding: 10px 24px;
 }
 
+@media screen and (max-width:480px) {
+    main {
+        padding: 0;
+    }
+
+    .main-item {
+        border-radius: 0;
+    }
+
+    .item-inner {
+        padding: 35px 16px;
+    }
+
+    .item-inner-large {
+        padding: 10px 20px;
+    }
+}
+
 h1 {
     font-weight: 600;
     font-size: 28pt;
@@ -272,4 +290,23 @@ header{
 
 .no-under-line {
     border-bottom: 0px solid;
+}
+
+@media screen and (max-width:480px) {
+    .icon {
+        width: 160px;
+        margin-bottom: 0;
+    }
+
+    .icon-name {
+        margin: 8px;
+    }
+
+    .no-line-height {
+        margin: 3px 0;
+    }
+
+    .main-list {
+        padding-left: 34px;
+    }
 }
