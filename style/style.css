@@ -56,7 +56,7 @@ main {
 
 h1 {
     font-weight: 600;
-    font-size: 28pt;
+    font-size: 26pt;
     margin-top: 0;
     margin-bottom: 60px;
 }
@@ -169,8 +169,72 @@ header{
     text-decoration: none;
 }
 
+.jc-nav, .it-nav, .pr-nav, .lt-nav {
+    position: absolute;
+    width: 300px;
+    max-height: 500px;
+    background-color: var(--main-color);
+    overflow: auto;
+}
+
+.jc-nav {
+    right: 252px;
+    display: none;
+}
+
+.it-nav {
+    right: 145px;
+    display: none;
+}
+
+.pr-nav {
+    right: 18px;
+    display: none;
+}
+
+.lt-nav {
+    right: 0;
+    display: none;
+}
+
+.nav-inner a {
+    color: var(--header-subcolor);
+    font-size: 13pt;
+}
+
+.nav-inner h4 {
+    color: white;
+    font-size: 15pt;
+    padding-left: 20px;
+}
+
+.nav-inner a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-inner ul {
+    list-style: none;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.nav-inner li:last-child {
+    margin-bottom: 10px;
+}
+
 
 /* header for smartphone */
+
+@media screen and (max-width:480px) {
+    .header-title {
+        font-size: 22pt;
+    }
+
+    .jc-nav, .it-nav, .pr-nav, .lt-nav {
+        display: none;
+    }
+}
 
 @media screen and (min-width:720px) {
     .hamburger {
@@ -238,6 +302,10 @@ header{
 
     .hamburger:hover::after {
         background-color: white;
+    }
+
+    .jc-nav {
+        display: none;
     }
 }
 
