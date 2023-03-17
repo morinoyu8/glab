@@ -67,5 +67,33 @@ $("#header").load(urlHeader + "/templete/header.html", function() {
             $(".lt-nav").css("display", "none");
         }
     );
+    var clickEventType = (( window.ontouchstart!==null ) ? "click":"touchend");
+    $(document).on(clickEventType, ".hamburger",
+        function() {
+            $(".hamburger-nav").css("display", "block");
+            $("main").css("display", "none");
+            $(".hamburger-close").css("display", "block");
+            $(".hamburger").css("display", "none");
+        }
+    );
+    $(document).on(clickEventType, ".hamburger-close",
+        function() {
+            $("main").removeAttr("style");
+            $(".hamburger-nav").removeAttr("style");
+            $(".hamburger-close").removeAttr("style");
+            $(".hamburger").removeAttr("style");
+            window.scrollTo(0, 0);
+        }
+    );
+    $(window).resize(
+        function() {
+            if (window.innerWidth > 720) {
+                $("main").removeAttr("style");
+                $(".hamburger-nav").removeAttr("style");
+                $(".hamburger-close").removeAttr("style");
+                $(".hamburger").removeAttr("style");
+            }
+        }
+    );
 });
 $("#footer").load(urlHeader + "/templete/footer.html");
