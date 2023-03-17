@@ -2,6 +2,7 @@
     --main-color: #17a54b;
     --background-color: #f4f4f4;
     --header-subcolor: #bce8a9;
+    --gray-color: #555555;
 }
 
 html {
@@ -348,7 +349,28 @@ header{
     }
 }
 
+/* footer */
 
+footer {
+    background-color: var(--gray-color);
+    padding: 20px 0 100px;
+    text-align: center;
+}
+
+.footer-title {
+    color: white;
+    font-weight: 600;
+    font-size: 20pt;
+    margin: 0 0 10px 0 !important;
+}
+
+.footer-title:hover {
+    text-decoration: none;
+}
+
+.footer-text {
+    margin: 0 !important;
+}
 
 
 /* Main Page */

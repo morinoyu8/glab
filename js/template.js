@@ -74,6 +74,7 @@ $("#header").load(urlHeader + "/templete/header.html", function() {
             $("main").css("display", "none");
             $(".hamburger-close").css("display", "block");
             $(".hamburger").css("display", "none");
+            $("footer").css("display", "block")
         }
     );
     $(document).on(clickEventType, ".hamburger-close",
@@ -96,4 +97,8 @@ $("#header").load(urlHeader + "/templete/header.html", function() {
         }
     );
 });
-$("#footer").load(urlHeader + "/templete/footer.html");
+$("#footer").load(urlHeader + "/templete/footer.html", 
+    function() {
+        $("#footer-title").attr("href", urlHeader + "/");
+    }
+);
