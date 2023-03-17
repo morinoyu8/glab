@@ -9,10 +9,10 @@ $("#header").load(urlHeader + "/templete/header.html", function() {
     $("#header-it").attr("href", urlHeader + "/#it");
     $("#header-pr").attr("href", urlHeader + "/#pr");
     $("#header-lt").attr("href", urlHeader + "/#lt");
-    $("#jc-nav").load(urlHeader + "/main/journal-club.html");
-    $("#it-nav").load(urlHeader + "/main/intro-thesis.html");
-    $("#pr-nav").load(urlHeader + "/main/progress-report.html");
-    $("#lt-nav").load(urlHeader + "/main/lt.html");
+    $(".jc").load(urlHeader + "/main/journal-club.html");
+    $(".it").load(urlHeader + "/main/intro-thesis.html");
+    $(".pr").load(urlHeader + "/main/progress-report.html");
+    $(".lt").load(urlHeader + "/main/lt.html");
     $("#header-jc").hover(
         function() {
             $(".jc-nav").css("display", "block");
@@ -69,7 +69,3 @@ $("#header").load(urlHeader + "/templete/header.html", function() {
     );
 });
 $("#footer").load(urlHeader + "/templete/footer.html");
-$("#jc").load(urlHeader + "/main/journal-club.html");
-$("#it").load(urlHeader + "/main/intro-thesis.html");
-$("#pr").load(urlHeader + "/main/progress-report.html");
-$("#lt").load(urlHeader + "/main/lt.html");
