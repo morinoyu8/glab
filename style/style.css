@@ -197,6 +197,20 @@ header{
     display: none;
 }
 
+.hamburger-nav {
+    position: absolute;
+    width: 100%;
+    background-color: var(--main-color);
+    overflow: auto;
+    display: none;
+}
+
+.hamburger-nav .nav-inner {
+    display: block;
+    max-width: 480px;
+    margin: 20px auto;
+}
+
 .nav-inner a {
     color: var(--header-subcolor);
     font-size: 13pt;
@@ -219,8 +233,17 @@ header{
     padding-right: 30px;
 }
 
+.hamburger-nav .nav-inner ul {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
 .nav-inner li:last-child {
     margin-bottom: 10px;
+}
+
+.hamburger-nav #jc-nav h4, .hamburger-nav #it-nav h4, .hamburger-nav #pr-nav h4, .hamburger-nav #lt-nav h4 {
+    font-size: 13pt;
 }
 
 
