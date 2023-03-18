@@ -7,10 +7,26 @@ var clickEventType = (( window.ontouchstart!==null ) ? "click":"touchend");
 $("#header").load(urlHeader + "/templete/header.html", 
     function() {
         $("#title").attr("href", urlHeader + "/");
-        $(".jc").load(urlHeader + "/lists/journal-club.html");
-        $(".it").load(urlHeader + "/lists/intro-thesis.html");
-        $(".pr").load(urlHeader + "/lists/progress-report.html");
-        $(".lt").load(urlHeader + "/lists/lt.html");
+        $(".jc").load(urlHeader + "/lists/journal-club.html",
+            function() {
+                setJCHref();
+            }
+        );
+        $(".it").load(urlHeader + "/lists/intro-thesis.html",
+            function() {
+                setITHref();
+            }
+        );
+        $(".pr").load(urlHeader + "/lists/progress-report.html",
+            function() {
+                setPRHref();
+            }
+        );
+        $(".lt").load(urlHeader + "/lists/lt.html",
+            function() {
+                setLTHref();
+            }
+        );
         $("#header-jc").attr("href", urlHeader + "/#jc");
         $("#header-it").attr("href", urlHeader + "/#it");
         $("#header-pr").attr("href", urlHeader + "/#pr");
@@ -80,6 +96,7 @@ $("#footer").load(urlHeader + "/templete/footer.html",
     }
 );
 
+
 function setNavDisplay(id) {
     if (id == 1) {
         $(".jc-nav").css("display", "block");
@@ -128,4 +145,42 @@ function setHamburgerNav() {
 
 function setFooterPosition() {
     $("main").css("min-height", (window.innerHeight - $("header").outerHeight() - $("footer").outerHeight() - 70) + "px");
+}
+
+function setJCHref() {
+    // journal-club
+    $(".jc-isa-5").attr("href", urlHeader + "/test");
+    $(".jc-isa-3a").attr("href", urlHeader + "/markdown-test");
+    $(".jc-pba-13b").attr("href", urlHeader + "/");
+    $(".jc-pba-11").attr("href", urlHeader + "/");
+}
+
+function setITHref() {
+    // intro-thesis
+    $(".it-saver").attr("href", urlHeader + "/");
+}
+
+function setPRHref() {
+    // progress-report
+    $(".pr-2023-01-23").attr("href", urlHeader + "/");
+    $(".pr-2023-01-12").attr("href", urlHeader + "/");
+    $(".pr-2022-12-26").attr("href", urlHeader + "/");
+    $(".pr-2022-12-19").attr("href", urlHeader + "/");
+    $(".pr-2022-12-12").attr("href", urlHeader + "/");
+    $(".pr-2022-12-05").attr("href", urlHeader + "/");
+    $(".pr-2022-11-28").attr("href", urlHeader + "/");
+    $(".pr-2022-11-06").attr("href", urlHeader + "/");
+    $(".pr-2022-10-24").attr("href", urlHeader + "/");
+    $(".pr-2022-10-17").attr("href", urlHeader + "/");
+}
+
+function setLTHref() {
+    // LT
+    $(".lt-2022-7").attr("href", urlHeader + "/");
+    $(".lt-2022-6").attr("href", urlHeader + "/");
+    $(".lt-2022-5").attr("href", urlHeader + "/");
+    $(".lt-2022-4").attr("href", urlHeader + "/");
+    $(".lt-2022-3").attr("href", urlHeader + "/");
+    $(".lt-2022-2").attr("href", urlHeader + "/");
+    $(".lt-2022-1").attr("href", urlHeader + "/");
 }
