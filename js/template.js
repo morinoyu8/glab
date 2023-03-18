@@ -65,7 +65,7 @@ $("#footer").load(urlHeader + "/templete/footer.html",
         $(document).on(clickEventType, ".hamburger-close",
             function() {
                 resetStyle();
-                setFooterPosition()
+                setFooterPosition();
                 window.scrollTo(0, 0);
             }
         );
@@ -74,7 +74,7 @@ $("#footer").load(urlHeader + "/templete/footer.html",
                 if (window.innerWidth > 720) {
                     resetStyle();
                 }
-                setFooterPosition()
+                setFooterPosition();
             }
         );
     }
@@ -127,10 +127,5 @@ function setHamburgerNav() {
 }
 
 function setFooterPosition() {
-    if (window.innerHeight > $("header").innerHeight() + $("main").outerHeight(true) + $("footer").innerHeight()) {
-        $("footer").css("position", "fixed");
-        $("footer").css("top", (window.innerHeight - $("footer").outerHeight()) + "px");
-        $("footer").css("width", "100%");
-        $("footer").css("height", "66px");
-    }
+    $("main").css("min-height", (window.innerHeight - $("header").outerHeight() - $("footer").outerHeight() - 70) + "px");
 }
