@@ -6,14 +6,14 @@ var clickEventType = (( window.ontouchstart!==null ) ? "click":"touchend");
 
 $("#header").load(urlHeader + "/templete/header.html", function() {
     $("#title").attr("href", urlHeader + "/");
+    $(".jc").load(urlHeader + "/lists/journal-club.html");
+    $(".it").load(urlHeader + "/lists/intro-thesis.html");
+    $(".pr").load(urlHeader + "/lists/progress-report.html");
+    $(".lt").load(urlHeader + "/lists/lt.html");
     $("#header-jc").attr("href", urlHeader + "/#jc");
     $("#header-it").attr("href", urlHeader + "/#it");
     $("#header-pr").attr("href", urlHeader + "/#pr");
     $("#header-lt").attr("href", urlHeader + "/#lt");
-    $(".jc").load(urlHeader + "/main/journal-club.html");
-    $(".it").load(urlHeader + "/main/intro-thesis.html");
-    $(".pr").load(urlHeader + "/main/progress-report.html");
-    $(".lt").load(urlHeader + "/main/lt.html");
     $("#header-jc").hover(
         function() {
             $(".jc-nav").css("display", "block");

@@ -1,0 +1,2 @@
+document.getElementById('content').innerHTML =
+              marked.parse('# Markdown sample\n\n- Markdownのテキスト\n\n## 見出し -> 「#」\n\n- 「#」はタイトル   \n\n - 「#」の後に、スペースを1つあけて、タイトルの文字を書く   \n\n - 「#」の個数で大きさが変わる（個数が多くなるほど小さくなる）\n\n# タイトル１\n\n## タイトル２\n\n### タイトル３\n\n#### タイトル４');

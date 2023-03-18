@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
     <head>
         <link rel="stylesheet" type="text/css" href="../style/style.css" />
-        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script type="text/javascript" src="../js/markdown-to-html.js"></script>
         <meta name="viewport" content="width=device-width" >
     </head>
     <body>
         <div id="header"></div>
-        <main lang="ja">
+        <main>
             <div class="main-item">
                 <div class="item-inner">
                     <h1>こんにちは、こんばんは、おはようございます。</h1>
@@ -41,8 +43,13 @@
                     </ul>
                 </div>
             </div>
+        <div id="content"></div>
         </main>
         <div id="footer"></div>
         <script type="text/javascript" src="../js/template.js"></script>
+        <script>
+            document.getElementById('content').innerHTML =
+              marked.parse('# Markdown sample\n\n- Markdownのテキスト\n\n## 見出し -> 「#」\n\n- 「#」はタイトル   \n\n - 「#」の後に、スペースを1つあけて、タイトルの文字を書く   \n\n - 「#」の個数で大きさが変わる（個数が多くなるほど小さくなる）\n\n# タイトル１\n\n## タイトル２\n\n### タイトル３\n\n#### タイトル４');  
+        </script>
     </body>
 </html>
