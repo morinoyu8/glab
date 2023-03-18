@@ -2,6 +2,7 @@ var urlHeader = ""
 if (location.href.indexOf("https://morinoyu8.github.io") >= 0) {
     urlHeader = "/glab";
 }
+var clickEventType = (( window.ontouchstart!==null ) ? "click":"touchend");
 
 $("#header").load(urlHeader + "/templete/header.html", function() {
     $("#title").attr("href", urlHeader + "/");
@@ -67,14 +68,17 @@ $("#header").load(urlHeader + "/templete/header.html", function() {
             $(".lt-nav").css("display", "none");
         }
     );
-    var clickEventType = (( window.ontouchstart!==null ) ? "click":"touchend");
-    $(document).on(clickEventType, ".hamburger",
+});
+$("#footer").load(urlHeader + "/templete/footer.html", 
+    function() {
+        $("#footer-title").attr("href", urlHeader + "/");
+        $(document).on(clickEventType, ".hamburger",
         function() {
             $(".hamburger-nav").css("display", "block");
             $("main").css("display", "none");
             $(".hamburger-close").css("display", "block");
             $(".hamburger").css("display", "none");
-            $("footer").css("display", "block")
+            $("footer").css("margin-top", $("#hamburger-nav").innerHeight() + "px");
         }
     );
     $(document).on(clickEventType, ".hamburger-close",
@@ -83,6 +87,7 @@ $("#header").load(urlHeader + "/templete/header.html", function() {
             $(".hamburger-nav").removeAttr("style");
             $(".hamburger-close").removeAttr("style");
             $(".hamburger").removeAttr("style");
+            $("footer").removeAttr("style");
             window.scrollTo(0, 0);
         }
     );
@@ -93,12 +98,9 @@ $("#header").load(urlHeader + "/templete/header.html", function() {
                 $(".hamburger-nav").removeAttr("style");
                 $(".hamburger-close").removeAttr("style");
                 $(".hamburger").removeAttr("style");
+                $("footer").removeAttr("style");
             }
         }
     );
-});
-$("#footer").load(urlHeader + "/templete/footer.html", 
-    function() {
-        $("#footer-title").attr("href", urlHeader + "/");
     }
 );
