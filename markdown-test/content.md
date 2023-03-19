@@ -95,7 +95,7 @@ output: 各プログラムポイントごとのポインタ解析の結果
 
 ### Step2 : 実行不可能な辺辺を削除した control flow graph の作成
 
-プログラムの分岐数を $n$ としたとき, このアルゴリズムの計算量は $O(2^n)$
+プログラムの分岐数を \\(n\\) としたとき, このアルゴリズムの計算量は $O(2^n)$
 
 アルゴリズムの疑似コード化
 
@@ -222,7 +222,7 @@ def create_node(basic_block, prev, pre_value_state):
 
 sound な静的解析によって確実に通らないパスを除外できる.
 
-ex) post_value_state = $\{ x \mapsto [-5, 10] \}$
+ex) post_value_state = \(\{ x \mapsto [-5, 10] \}\)
 
 - `if (x < 0)` : どちらの分岐も実行する
 
