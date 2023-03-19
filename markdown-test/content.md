@@ -2,7 +2,7 @@
 
 ## 方向性
 
-- 使われなくなったオブジェクトをより早く解放したい
+- <p>使われなくなったオブジェクトをより早く解放したい</p>
 
 example
 
@@ -56,17 +56,17 @@ example
 
 ## 先週のお話
 
-提案手法
+### 提案手法
 
-Step1. heap 解析
+- Step1. heap 解析
 
-Step2. 実行不可能な辺を削除した control flow graph の作成
+- Step2. 実行不可能な辺を削除した control flow graph の作成
 
-Step3. それ以降すべてのパスで use されない頂点を見つける (モデル検査)
+- Step3. それ以降すべてのパスで use されない頂点を見つける (モデル検査)
 
-Step4. heap 解析による free の挿入
+- Step4. heap 解析による free の挿入
 
-- 目標は "確実に" free を早められるものだけを抽出し, "安全に" free する
+<p>目標は "確実に" free を早められるものだけを抽出し, "安全に" free する</p>
 
 
 ## 今週のお話
@@ -99,9 +99,9 @@ output: 各プログラムポイントごとのポインタ解析の結果
 
 アルゴリズムの疑似コード化
 
-input: Control Flow Glaph
+- input: Control Flow Glaph
 
-output: 分岐を展開し, 実行不可能な辺を削除した Control Flow Glaph
+- output: 分岐を展開し, 実行不可能な辺を削除した Control Flow Glaph
 
 各 basic block に 1つ以上の node (頂点) がある
 各頂点は以下の情報を持つ
@@ -116,8 +116,11 @@ node {
 ```
 
 - prev : 前の node の集合
+  
 - basic_block : 各 basic_block を判別できるもの (basic block のポインタ or ユニークな ID)
+  
 - pre_value_state : この basic block に入る前のメモリの抽象化
+  
 - next : 次の node の集合
 
 
@@ -140,7 +143,7 @@ loop_id = search_loop(C)
 
 **Example**
 
-<p><img src="images/221226/image01.png" width="25%" /></p>
+<p><img src="images/image01.png" width="25%" /></p>
 
 ```python
 loop_id[B1] = 0
@@ -252,7 +255,7 @@ else
 
 - `create_node()` を実行したとき
 
-<p><img src="images/221226/image02.png" width="30%" /></p>
+<p><img src="images/image02.png" width="30%" /></p>
 
 - `next_bb_analysis()`
   - basic block B2, B3 はどちらもループの要素でないとする
@@ -367,6 +370,7 @@ def loop_top_analysis(first, second):
 グラフが等しいの定義
 
 - node の basic block を見た時に node 間の関係性が等しい
+  
 - pre_value_state の値は見ない
 
 **Example**

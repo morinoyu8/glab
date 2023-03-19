@@ -147,6 +147,7 @@ function setFooterPosition() {
     $("main").css("min-height", (window.innerHeight - $("header").outerHeight() - $("footer").outerHeight() - 70) + "px");
 }
 
+
 function setJCHref() {
     // journal-club
     $(".jc-isa-5").attr("href", urlHeader + "/test");

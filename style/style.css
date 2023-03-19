@@ -87,7 +87,7 @@ h3 {
 h4 {
     font-weight: 600;
     font-size: 14pt;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 15px;
     line-height: 140%;
 }
@@ -113,14 +113,41 @@ p, h5, h6 {
 }
 
 ul {
-    padding-left: 50px;
+    margin-top: 14px;
+    padding-left: 30px;
     padding-right: 30px;
 }
 
-li {
-    padding-bottom: 10px;
+pre {
+    background-color: #eeeeee;
+    padding: 10px 10px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    overflow-x: scroll;
 }
 
+code {
+    background-color: #eeeeee;
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin: 0 4px;
+    font-size: 11pt;
+    line-height: 150%;
+}
+
+pre code {
+    margin: 0;
+    padding: 0;
+    background-color: initial;
+    border-radius: 0;
+}
+
+/* @media screen and (max-width:720px) {
+    pre {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+} */
 
 
 /* Header */
@@ -159,6 +186,7 @@ header{
 
 .header-list li {
     margin-right: 60px;
+    padding-top: 0;
 }
 
 .header-list li a {
@@ -398,6 +426,11 @@ footer {
     margin-bottom: 2px;
     padding-left: 40px;
     padding-right: 20px;
+}
+
+.main-list li {
+    padding-top: 0;
+    padding-bottom: 10px;
 }
 
 .main-title {
