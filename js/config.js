@@ -4,17 +4,27 @@ if (location.href.indexOf('https://morinoyu8.github.io') >= 0) {
 }
 
 $(document).ready(function() {
-    $('<link>').attr({
-        'rel': 'stylesheet',
-        'type': 'text/css',
-        'href': urlHeader + '/style/style.css'
-    }).appendTo('head');
+    var style = [urlHeader + '/style/style.css', 
+                 urlHeader + '/style/highlight.css'];
 
-    var headSrc = ['https://cdn.jsdelivr.net/npm/marked/marked.min.js'];
+    var headSrc = ['https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+                   'https://polyfill.io/v3/polyfill.min.js?features=es6',
+                   'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+                   'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js',
+                   'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/c.min.js',
+                   urlHeader + '/js/mathjax-config.js'];
 
     var bodySrc = [urlHeader + '/js/markdown-to-html.js',
                    urlHeader + '/js/template.js'];
     
+    for (var i in style) {
+        $('<link>').attr({
+            'rel': 'stylesheet',
+            'type': 'text/css',
+            'href': style[i]
+        }).appendTo('head');
+    }
+
     for (var i in headSrc) {
         $('<script>').attr({
             'type': 'text/javascript',
@@ -43,6 +53,7 @@ $(document).ready(function() {
     $('main').after($('<div>').attr({
         'id': 'footer'
     }));
+    // $('body').prepend('<p>$x$</p>');
 
     $('#footer').ready(function() {
         for (var i in bodySrc) {

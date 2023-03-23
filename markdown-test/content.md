@@ -7,26 +7,30 @@
 example
 
 ```c
- 1  int main(void) {
- 2      char *str = (char *)xmalloc(sizeof(char));
- 3  
- 4      int input;
- 5      int flag = 0;
- 6      while (1) {
- 7          scanf("%d", &input);
- 8          if (input < 0)
- 9              break;
-10              
-11          if (input == 0) {
-12              flag = 1;
-13          }
-14  
-15          if (flag == 0)
-16              use(str);
-17      }
-18      free(str);
-19      return 0;
-20  }
+#include <ggg.h>
+
+// main
+int main(void) {
+    char *str = (char *)xmalloc(sizeof(char));  
+    int input;
+    int flag = 0;
+    while (true) {
+        scanf("%d", &input);
+        if (input < 0)
+            break;  
+
+        if (input == 0) {
+            flag = 1;
+        }
+        printf("hello: %d", x);
+        int y = x + 1;
+
+        if (flag == 0)
+            use(str);
+    }
+    free(str);
+    return 0;
+}
 ```
 
 ```diff
