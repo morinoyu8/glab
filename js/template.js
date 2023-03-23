@@ -1,6 +1,6 @@
-var urlHeader = ""
-if (location.href.indexOf("https://morinoyu8.github.io") >= 0) {
-    urlHeader = "/glab";
+var urlHeader = ''
+if (location.href.indexOf('https://morinoyu8.github.io') >= 0) {
+    urlHeader = '/glab';
 }
 var clickEventType = (( window.ontouchstart!==null ) ? "click":"touchend");
 

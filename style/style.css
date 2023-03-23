@@ -119,7 +119,7 @@ ul {
 }
 
 pre {
-    background-color: #eeeeee;
+    background-color: var(--background-color);
     padding: 15px 15px;
     border-radius: 8px;
     margin-bottom: 25px;
@@ -127,7 +127,7 @@ pre {
 }
 
 code {
-    background-color: #eeeeee;
+    background-color: var(--background-color);
     padding: 2px 4px;
     border-radius: 4px;
     margin: 0 4px;
@@ -140,6 +140,14 @@ pre code {
     padding: 0;
     background-color: initial;
     border-radius: 0;
+}
+
+/* .code-linenum {
+
+} */
+
+.float-left {
+    float: left;
 }
 
 /* @media screen and (max-width:720px) {

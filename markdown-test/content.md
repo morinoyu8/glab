@@ -47,6 +47,7 @@ int main(void) {
   11          if (input == 0) {
 + 12              free(str);
 + 13              str = NULL;
+- 12              str = NULL;
   14              flag = 1;
   15          }
   16  

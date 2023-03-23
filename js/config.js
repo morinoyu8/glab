@@ -3,43 +3,22 @@ if (location.href.indexOf('https://morinoyu8.github.io') >= 0) {
     urlHeader = '/glab';
 }
 
-$(document).ready(function() {
-    var style = [urlHeader + '/style/style.css', 
-                 urlHeader + '/style/highlight.css'];
+var style = [urlHeader + '/style/style.css', 
+             urlHeader + '/style/highlight.css'];
 
-    var headSrc = ['https://cdn.jsdelivr.net/npm/marked/marked.min.js',
-                   'https://polyfill.io/v3/polyfill.min.js?features=es6',
-                   'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
-                   'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js',
-                   'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/c.min.js',
-                   urlHeader + '/js/mathjax-config.js'];
-
-    var bodySrc = [urlHeader + '/js/markdown-to-html.js',
-                   urlHeader + '/js/template.js'];
-    
-    for (var i in style) {
-        $('<link>').attr({
-            'rel': 'stylesheet',
-            'type': 'text/css',
-            'href': style[i]
-        }).appendTo('head');
-    }
-
-    for (var i in headSrc) {
-        $('<script>').attr({
-            'type': 'text/javascript',
-            'src': headSrc[i]
-        }).appendTo('head');
-    }
-
-    $('<meta>').attr({
-        'name': 'viewport',
-        'content': 'width=device-width'
+for (var i in style) {
+    $('<link>').attr({
+        'rel': 'stylesheet',
+        'type': 'text/css',
+        'href': style[i]
     }).appendTo('head');
+}
 
-    $('body').prepend('<main>');
+$(document).ready(function() {
+    $('body').prepend('<main>')
     $('<div>').attr({
-        'class': 'main-item'
+        'class': 'main-item',
+        'style': 'display: none'
     }).appendTo('main');
     $('<div>').attr({
         'class': 'item-inner'
@@ -51,16 +30,37 @@ $(document).ready(function() {
         'id': 'header'
     }));
     $('main').after($('<div>').attr({
-        'id': 'footer'
+        'id': 'footer',
+        'style': 'display: none'
     }));
-    // $('body').prepend('<p>$x$</p>');
+    $('<script>').attr({
+        'type': 'text/javascript',
+        'src': urlHeader + '/js/template.js',
+    }).appendTo('body');
+});
 
-    $('#footer').ready(function() {
-        for (var i in bodySrc) {
-            $('<script>').attr({
-                'type': 'text/javascript',
-                'src': bodySrc[i]
-            }).appendTo('body');
+var headSrc = ['https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+               'https://polyfill.io/v3/polyfill.min.js?features=es6',
+               'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+               'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js',
+               'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/c.min.js',
+               urlHeader + '/js/mathjax-config.js'];
+
+loadHeadSrc(0);
+
+function loadHeadSrc(i) {
+    $.getScript(headSrc[i], function() {
+        if (i + 1 < headSrc.length) {
+            loadHeadSrc(i + 1);
+        } else {
+            $.getScript(urlHeader + '/js/markdown-to-html.js', function() { 
+                $('#footer').attr({
+                    'style': 'display: block;'
+                });
+                $('.main-item').attr({
+                    'style': 'display: block;'
+                });
+            });
         }
     })
-});
+}
