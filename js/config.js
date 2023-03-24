@@ -43,13 +43,13 @@ $(document).ready(function() {
     }).appendTo('body');
 });
 
-var headSrc = ['https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+var headSrc = [urlHeader + '/js/mathjax-config.js',
+               'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
                'https://polyfill.io/v3/polyfill.min.js?features=es6',
                'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
                'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js',
                'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/c.min.js',
-               'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/python.min.js',
-               urlHeader + '/js/mathjax-config.js'];
+               'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/python.min.js'];
 
 loadHeadSrc(0);
 

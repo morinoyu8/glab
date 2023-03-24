@@ -1,7 +1,7 @@
 .code-block {
     display: flex;
     background-color: var(--background-color);
-    padding: 15px 15px;
+    padding: 15px 20px 15px 15px;
     border-radius: 8px;
     margin-bottom: 25px;
 }
@@ -14,7 +14,6 @@ pre {
 
 code {
     background-color: var(--background-color);
-    width: auto;
     padding: 2px 4px;
     border-radius: 4px;
     margin: 0 4px;
@@ -30,7 +29,7 @@ pre code {
 }
 
 .code-linenum {
-    margin: 0;
+    margin-right: 20px;
     min-width: 16px;
     text-align: right;
     -webkit-touch-callout: none;
@@ -46,7 +45,6 @@ pre code {
 }
 
 .code-linenum-main {
-    margin-left: 20px;
     flex: 1;
 }
 

@@ -50,16 +50,16 @@ const renderer = {
             code = code.replace(/\<\/div\>\n/g, '</div>');
         }
 
-        code = code.replace(/\n(.*)\<span class=\"hljs-comment\"\>.*\$\$\((.*)\)\$\$\<\/span\>\n/g, '<div style="$2">$1</div>');
+        code = code.replace(/\n(.*)\<span class=\"hljs-comment\"\>.*\@\@\((.*)\)\@\@\<\/span\>\n/g, '<div style="min-width:inherit;$2">$1</div>');
 
         if (!lang) {
-            return '<div class="code-block"><pre><code>'
+            return '<div class="code-block"><pre class="code-linenum-main"><code>'
             + code // (escaped ? code : escape(code, true))
             + '</code></pre></div>\n';
         }
 
         if (linenum < 0) {
-            return '<div class="code-block"><pre><code class="'
+            return '<div class="code-block"><pre class="code-linenum-main"><code class="'
             + this.options.langPrefix
             + lang // escape(lang)
             + '">'
@@ -75,10 +75,25 @@ const renderer = {
         + '">'
         + code // (escaped ? code : escape(code, true))
         + '</code></pre></div>\n';
+    },
+
+    text(text) {
+        if (text === '{') {
+            text = '\\{';
+        } else if (text === '}') {
+            text = '\\}';
+        } else if (text === '(') {
+            text = '\\(';
+        } else if (text === ')') {
+            text = '\\)';
+        }
+        return text;
     }
 };
 marked.use({ renderer });
 
 fetch('./content.md').then(r => { return r.text() }).then(file => {
-    document.getElementById('content').innerHTML = marked.parse(file);
+    const content = document.getElementById('content');
+    content.innerHTML = marked.parse(file);
+    MathJax.typeset();
 });

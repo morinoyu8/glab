@@ -1,5 +1,11 @@
 # 進捗報告 2022-12-26
 
+$\displaystyle \frac{3}{4}$
+
+$$\sqrt{3} + \frac{1}{2} \{3\}$$
+
+https://morinoyu8.github.io/glab/
+
 ## 方向性
 
 - <p>使われなくなったオブジェクトをより早く解放したい</p>
@@ -9,11 +15,13 @@ example
 ```c=
 #include <ggg.h>
 
+\\
+
 // main
 int main(void) {
     char *str = (char *)xmalloc(sizeof(char));  
     int input;
-    int flag = 0;  //$$(background-color: #aaaaff;)$$
+    int flag = 0;  //@@(background-color: #aaaaff;)@@
     while (true) {
         scanf("%d", &input);
         if (input < 0)
@@ -197,7 +205,7 @@ def next_bb_analysis(new):
         return
     elif len(next_basic_block) == 1:
         # 次の basic block が 1つなら
-        bb_analysis(next_basic_block, new, post_value_state)  # $$(background-color:#ffaaaa)$$
+        bb_analysis(next_basic_block, new, post_value_state)  # @@(background-color:#ffaaaa)@@
     else:
         # 次の basic block が 2つのとき必ず通らないパスは除外する
         # それぞれの条件を満たす value_state のフィルタをかける
@@ -228,7 +236,7 @@ def create_node(basic_block, prev, pre_value_state):
 
 sound な静的解析によって確実に通らないパスを除外できる.
 
-ex) post_value_state = \(\{ x \mapsto [-5, 10] \}\)
+ex) post_value_state = $\{ x \mapsto [-5, 10] \}$
 
 - `if (x < 0)` : どちらの分岐も実行する
 
