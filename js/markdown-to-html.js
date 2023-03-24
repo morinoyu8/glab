@@ -1,6 +1,5 @@
 marked.setOptions({
     highlight: function (code, lang) {
-        // console.log(lang)
         const language = hljs.getLanguage(lang) ? lang : 'plaintext';
         return hljs.highlight(code, { language }).value;
     }
@@ -10,14 +9,21 @@ const renderer = {
     code(code, infostring, escaped) {
         var lang = (infostring || '').match(/\S*/)[0];
         var linenum = -1;
+        var diffLang = false; 
 
         if (lang.match(/=/)) {
-            var info = lang.split('=');
+            const info = lang.split('=');
             lang = info[0];
             if (info[1].match(/^[0-9]/))
                 linenum = Number(info[1]);
             else
                 linenum = 1;
+        }
+
+        if (lang.match(/diff_/)) {
+            const info = lang.split('_');
+            lang = info[1];
+            diffLang = true
         }
 
         if (this.options.highlight) {
@@ -29,6 +35,25 @@ const renderer = {
         }
 
         code = code.replace(/\n$/, '') + '\n';
+        if (linenum >= 0) {
+            /* add line number */
+            const num = code.match(/\r\n|\n/g).length;
+            var strLinenum = String(linenum);
+            for (let i = 1; i < num; i++) {
+                strLinenum = strLinenum + '\n' + (linenum + i);
+            }
+        }
+
+        if (diffLang) {
+            console.log('first:\n' + code);
+            code = code.replace(/\n\+(.*)/g, '<div class="hljs-addition">+$1\n</div>');
+            code = code.replace(/\n\-(.*)/g, '<div class="hljs-deletion">-$1\n</div>');
+            code = code.replace(/\<\/div\>\n/g, '</div>');
+            console.log('second:\n' + code);
+            //code = code.replace(/\n\+(.*)\n/g, '\n<div class="hljs-addition">+$1\n</div>\n');
+            console.log('third:\n' + code);
+            //code = code.replace(/\n\-(.*)\n/g, '\n<span class="hljs-deletion">-$1\n</span>');
+        }
 
         if (!lang) {
             return '<pre><code>'
@@ -43,13 +68,6 @@ const renderer = {
             + '">'
             + code // (escaped ? code : escape(code, true))
             + '</code></pre>\n';
-        }
-
-        const num = code.match(/\r\n|\n/g).length;
-        var strLinenum = String(linenum);
-        for (let i = 1; i < num; i++) {
-            console.log(strLinenum);
-            strLinenum = strLinenum + '\n' + (linenum + i);
         }
 
         return '<pre><div class="code-linenum"><code>'

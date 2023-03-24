@@ -33,14 +33,14 @@ int main(void) {
 }
 ```
 
-```diff=
+```diff_c=
 int main(void) {
     char *str = (char *)xmalloc(sizeof(char));
 
     int input;
     int flag = 0;
     while (1) {
-        scanf("%d", &input);
++       scanf("%d", &input);
         if (input < 0)
             break;
         
@@ -50,6 +50,7 @@ int main(void) {
 -           str = NULL;
             flag = 1;
         }
+        x = x + 1;
 
         if (flag == 0)
             use(str);
@@ -150,13 +151,13 @@ loop_id = search_loop(C)
 
 <p><img src="images/image01.png" width="25%" /></p>
 
-```python
-loop_id[B1] = 0
-loop_id[B2] = 1
-loop_id[B3] = 1
-loop_id[B4] = 2
-loop_id[B5] = 2
-loop_id[B6] = 0
+```diff_python
+  loop_id[B1] = 0
++ loop_id[B2] = 1
+  loop_id[B3] = 1
+  loop_id[B4] = 2
+- loop_id[B5] = 2
+  loop_id[B6] = 0
 ```
 
 
