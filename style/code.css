@@ -1,0 +1,51 @@
+pre {
+    background-color: var(--background-color);
+    padding: 15px 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    display: flex;
+    overflow-x: scroll;
+}
+
+code {
+    background-color: var(--background-color);
+    width: auto;
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin: 0 4px;
+    font-size: 11pt;
+    line-height: 150%;
+    /* width: auto; */
+}
+
+pre code {
+    margin: 0;
+    padding: 0;
+    background-color: initial;
+    border-radius: 0;
+}
+
+.code-linenum {
+    text-align: right;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.code-linenum code {
+    color: #a0a1a7;
+}
+
+.code-linenum-main {
+    margin-left: 20px;
+}
+
+/* @media screen and (max-width:720px) {
+    pre {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+} */

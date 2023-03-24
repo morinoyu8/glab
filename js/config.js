@@ -3,8 +3,12 @@ if (location.href.indexOf('https://morinoyu8.github.io') >= 0) {
     urlHeader = '/glab';
 }
 
-var style = [urlHeader + '/style/style.css', 
-             urlHeader + '/style/highlight.css'];
+var style = [urlHeader + '/style/main.css', 
+             urlHeader + '/style/highlight.css',
+             urlHeader + '/style/header.css',
+             urlHeader + '/style/footer.css',
+             urlHeader + '/style/mainpage.css',
+             urlHeader + '/style/code.css'];
 
 for (var i in style) {
     $('<link>').attr({
@@ -44,6 +48,7 @@ var headSrc = ['https://cdn.jsdelivr.net/npm/marked/marked.min.js',
                'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
                'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js',
                'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/c.min.js',
+               'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/python.min.js',
                urlHeader + '/js/mathjax-config.js'];
 
 loadHeadSrc(0);

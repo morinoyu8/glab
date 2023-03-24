@@ -22,7 +22,7 @@ code.hljs {
 }
 
 .hljs-deletion {
-    background-color: #edaeaa;
+    background-color: #f9d8d6;
 }
 
 .hljs-attribute, .hljs-meta .hljs-string, .hljs-regexp, .hljs-string{
@@ -30,7 +30,7 @@ code.hljs {
 }
 
 .hljs-addition {
-    background-color: #a5dca4;
+    background-color: #d6fddb;
 }
 
 .hljs-literal, .hljs-number, .hljs-attr, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-pseudo, .hljs-template-variable, .hljs-type, .hljs-variable {

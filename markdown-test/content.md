@@ -6,7 +6,7 @@
 
 example
 
-```c
+```c=
 #include <ggg.h>
 
 // main
@@ -33,30 +33,30 @@ int main(void) {
 }
 ```
 
-```diff
-   1  int main(void) {
-   2      char *str = (char *)xmalloc(sizeof(char));
-   3  
-   4      int input;
-   5      int flag = 0;
-   6      while (1) {
-   7          scanf("%d", &input);
-   8          if (input < 0)
-   9              break;
-  10              
-  11          if (input == 0) {
-+ 12              free(str);
-+ 13              str = NULL;
-- 12              str = NULL;
-  14              flag = 1;
-  15          }
-  16  
-  17          if (flag == 0)
-  18              use(str);
-  19      }
-  20      free(str);
-  21      return 0;
-  22  }
+```diff=
+int main(void) {
+    char *str = (char *)xmalloc(sizeof(char));
+
+    int input;
+    int flag = 0;
+    while (1) {
+        scanf("%d", &input);
+        if (input < 0)
+            break;
+        
+        if (input == 0) {
++           free(str);
++           str = NULL;
+-           str = NULL;
+            flag = 1;
+        }
+
+        if (flag == 0)
+            use(str);
+    }
+    free(str);
+    return 0;
+}
 ```
 
 ## 先週のお話
@@ -111,7 +111,7 @@ output: 各プログラムポイントごとのポインタ解析の結果
 各 basic block に 1つ以上の node (頂点) がある
 各頂点は以下の情報を持つ
 
-```c
+```c=
 node {
     node prev
     bb *basic_block
