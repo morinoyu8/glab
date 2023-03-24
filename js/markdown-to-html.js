@@ -45,39 +45,36 @@ const renderer = {
         }
 
         if (diffLang) {
-            console.log('first:\n' + code);
             code = code.replace(/\n\+(.*)/g, '<div class="hljs-addition">+$1\n</div>');
             code = code.replace(/\n\-(.*)/g, '<div class="hljs-deletion">-$1\n</div>');
             code = code.replace(/\<\/div\>\n/g, '</div>');
-            console.log('second:\n' + code);
-            //code = code.replace(/\n\+(.*)\n/g, '\n<div class="hljs-addition">+$1\n</div>\n');
-            console.log('third:\n' + code);
-            //code = code.replace(/\n\-(.*)\n/g, '\n<span class="hljs-deletion">-$1\n</span>');
         }
 
+        code = code.replace(/\n(.*)\<span class=\"hljs-comment\"\>.*\$\$\((.*)\)\$\$\<\/span\>\n/g, '<div style="$2">$1</div>');
+
         if (!lang) {
-            return '<pre><code>'
+            return '<div class="code-block"><pre><code>'
             + code // (escaped ? code : escape(code, true))
-            + '</code></pre>\n';
+            + '</code></pre></div>\n';
         }
 
         if (linenum < 0) {
-            return '<pre><code class="'
+            return '<div class="code-block"><pre><code class="'
             + this.options.langPrefix
             + lang // escape(lang)
             + '">'
             + code // (escaped ? code : escape(code, true))
-            + '</code></pre>\n';
+            + '</code></pre></div>\n';
         }
 
-        return '<pre><div class="code-linenum"><code>'
+        return '<div class="code-block"><pre class="code-linenum"><code>'
         + strLinenum
-        + '</code></div><code class="'
+        + '</code></pre><pre class="code-linenum-main"><code class="'
         + this.options.langPrefix
         + lang // escape(lang)
-        + ' code-linenum-main">'
+        + '">'
         + code // (escaped ? code : escape(code, true))
-        + '</code></pre>\n';
+        + '</code></pre></div>\n';
     }
 };
 marked.use({ renderer });

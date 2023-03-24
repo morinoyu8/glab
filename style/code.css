@@ -1,9 +1,14 @@
-pre {
+.code-block {
+    display: flex;
     background-color: var(--background-color);
     padding: 15px 15px;
     border-radius: 8px;
     margin-bottom: 25px;
-    display: flex;
+}
+
+pre {
+    margin: 0;
+    display: block;
     overflow-x: scroll;
 }
 
@@ -15,7 +20,6 @@ code {
     margin: 0 4px;
     font-size: 11pt;
     line-height: 150%;
-    /* width: auto; */
 }
 
 pre code {
@@ -26,6 +30,8 @@ pre code {
 }
 
 .code-linenum {
+    margin: 0;
+    min-width: 16px;
     text-align: right;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -41,6 +47,7 @@ pre code {
 
 .code-linenum-main {
     margin-left: 20px;
+    flex: 1;
 }
 
 /* @media screen and (max-width:720px) {

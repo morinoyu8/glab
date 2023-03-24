@@ -13,7 +13,7 @@ example
 int main(void) {
     char *str = (char *)xmalloc(sizeof(char));  
     int input;
-    int flag = 0;
+    int flag = 0;  //$$(background-color: #aaaaff;)$$
     while (true) {
         scanf("%d", &input);
         if (input < 0)
@@ -181,7 +181,7 @@ def bb_analysis(basic_block, prev, pre_value_state):
     next_bb_analysis(new)
 ```
 
-```python
+```python=
 def next_bb_analysis(new):
     # もしこの basic block がループの要素だったときループ解析を始める
     if loop_id[new.basic_block] != 0:
@@ -197,7 +197,7 @@ def next_bb_analysis(new):
         return
     elif len(next_basic_block) == 1:
         # 次の basic block が 1つなら
-        bb_analysis(next_basic_block, new, post_value_state)
+        bb_analysis(next_basic_block, new, post_value_state)  # $$(background-color:#ffaaaa)$$
     else:
         # 次の basic block が 2つのとき必ず通らないパスは除外する
         # それぞれの条件を満たす value_state のフィルタをかける
