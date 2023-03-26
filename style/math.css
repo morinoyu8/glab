@@ -3,3 +3,7 @@ span.MJXc-display {
     overflow-y: hidden;
     padding-bottom: 12px;
 }
+
+p:has(span.MJXc-display) {
+    margin: auto 10px;
+}

@@ -87,7 +87,7 @@ const renderer = {
             text = '\\}';
         } else if (text === '(') {
             text = '\\(';
-        } else if (text === ')') {
+        jki9} else if (text === ')') {
             text = '\\)';
         } else if (text === '\\') {
             text = '\\\\';
@@ -99,6 +99,12 @@ const renderer = {
     },
 
     listitem(text) {
+        console.log('1: ' + text);
+        if (text.match(/\<p\>/)) {
+            return `<li>${text}</li>\n`;
+        }
+        text = text.replace(/\<li\>[^(\<p\>)](.*)\<\/li\>/g, '<li><p>$2</p></li>');
+        console.log('2:' + text);
         return `<li><p>${text}</p></li>\n`;
     }
 };
@@ -113,7 +119,9 @@ fetch('./content.md').then(r => { return r.text() }).then(file => {
             "HTML-CSS": { linebreaks: { automatic: true } },
                    SVG: { linebreaks: { automatic: true } }
         });
-        MathJax.Hub.Typeset();
+        MathJax.Hub.Typeset(null, function() {
+            $('.mjx-full-width').css({'cssText': 'display: initial !important; font-size: 119% !important'});
+        });
     });
 });
 

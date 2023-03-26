@@ -134,4 +134,8 @@ li ul ul:last-child {
     .no-line-height {
         margin: 3px 0;
     }
+
+    li ul {
+        padding-left: 20px;
+    }
 }

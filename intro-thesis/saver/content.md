@@ -121,15 +121,15 @@ for (...) {
 
 - 1 周目
   - (8行目) true branch と仮定
-  　　<p><img src="images/image-1.png" width="70%" /></p> 
+  　　<img src="images/image-1.png" width="70%" /> 
 
 - 2 周目
   - (8行目) false branch, (13行目) false branch と仮定 (`do_cleanup()` が実行)
-     <p><img src="images/image-2.png" width="70%" /></p>
+     <img src="images/image-2.png" width="70%" />
 
 - 3 周目
   - (8行目) false branch と仮定
-    <p><img src="images/image-3.png" width="45%" /></p>
+     <img src="images/image-3.png" width="45%" />
 
   - `first` は dangling pointer (not NULL).
   
