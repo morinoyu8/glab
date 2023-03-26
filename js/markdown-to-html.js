@@ -106,5 +106,14 @@ marked.use({ renderer });
 
 fetch('./content.md').then(r => { return r.text() }).then(file => {
     $('#content').html(marked.parse(file));
-    MathJax.Hub.Typeset();
+    MathJax.Hub.Typeset(null, function() {
+        MathJax.Hub.Config({
+            tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },
+            CommonHTML: { linebreaks: { automatic: true } },
+            "HTML-CSS": { linebreaks: { automatic: true } },
+                   SVG: { linebreaks: { automatic: true } }
+        });
+        MathJax.Hub.Typeset();
+    });
 });
+

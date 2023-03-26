@@ -14,13 +14,6 @@
 //     }
 // };
 
-MathJax.Hub.Config({
-    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-    CommonHTML: { linebreaks: { automatic: true } },
-    "HTML-CSS": { linebreaks: { automatic: true } },
-           SVG: { linebreaks: { automatic: true } }
-});
-
 var timer = false;
 var resize = false;
 var firstWidth = 0;
