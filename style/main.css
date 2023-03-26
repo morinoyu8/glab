@@ -130,11 +130,6 @@ li ul ul:last-child {
     border-bottom: 0px solid;
 }
 
-/* mjx-container {
-    overflow-x: scroll;
-    overflow-y: hidden;
-} */
-
 @media screen and (max-width:480px) {
     .no-line-height {
         margin: 3px 0;

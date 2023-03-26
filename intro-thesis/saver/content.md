@@ -4,7 +4,7 @@
 
 ## 概要
 
-$x = 1$
+$\fre{1}$
 
 SAVER
 
@@ -409,7 +409,7 @@ $$f_c^{P C}(\pi)= \left\{\begin{array}{lll}
 
 <ul>
 
-- $\operatorname{Kill}(\pi, x)=\left\{\left(x^{\prime}, \_ , x^{\prime \prime}\right) \in \pi \mid x=x^{\prime} \vee x=x^{\prime \prime}\right\} \cup\left\{\left(x^{\prime}, \_ , n\right) \in\right. \left.\pi \mid x=x^{\prime}\right\}$
+- $\displaystyle \operatorname{Kill}(\pi, x)=\left\{\left(x^{\prime}, \_ , x^{\prime \prime}\right) \in \pi \mid x=x^{\prime} \vee x=x^{\prime \prime}\right\} \cup\left\{\left(x^{\prime}, \_ , n\right) \in\right. \left.\pi \mid x=x^{\prime}\right\}$
 
 </ul>
 

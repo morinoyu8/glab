@@ -1,0 +1,12 @@
+/* mjx-container {
+    max-width: 100%;
+    position: inherit;
+    overflow-x: scroll;
+    overflow-y: hidden;
+} */
+
+.MathJax{
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 16px;
+}

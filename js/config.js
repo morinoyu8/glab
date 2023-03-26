@@ -1,12 +1,3 @@
-// $.getScript(urlHeader + '/js/markdown-to-html.js', function() { 
-//     $('#footer').attr({
-//         'style': 'display: block;'
-//     });
-//     $('.main-item').attr({
-//         'style': 'display: block;'
-//     });
-// });
-
 var urlHeader = ''
 if (location.href.indexOf('https://morinoyu8.github.io') >= 0) {
     urlHeader = '/glab';
@@ -17,7 +8,8 @@ var style = [urlHeader + '/style/main.css',
              urlHeader + '/style/header.css',
              urlHeader + '/style/footer.css',
              urlHeader + '/style/mainpage.css',
-             urlHeader + '/style/code.css'];
+             urlHeader + '/style/code.css',
+             urlHeader + '/style/math.css'];
 
 for (var i in style) {
     $('<link>').attr({
@@ -56,13 +48,12 @@ $(document).on('load', function() {
     console.log('hello');
 })
 
-var headSrc = [urlHeader + '/js/mathjax-config.js',
-               'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
-               'https://polyfill.io/v3/polyfill.min.js?features=es6',
-               'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+var headSrc = ['https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+               'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML',
                'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js',
                'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/c.min.js',
-               'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/python.min.js'];
+               'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/python.min.js',
+               urlHeader + '/js/mathjax-config.js'];
 
 var e_time = new Date(); 
 loadHeadSrc(0);

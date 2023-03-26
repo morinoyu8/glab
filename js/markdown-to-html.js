@@ -103,5 +103,5 @@ marked.use({ renderer });
 fetch('./content.md').then(r => { return r.text() }).then(file => {
     $('#content').html(marked.parse(file));
     var x = Math.random(1)
-    MathJax.typeset();
+    MathJax.Hub.Typeset()
 });
