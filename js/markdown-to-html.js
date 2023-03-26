@@ -96,6 +96,10 @@ const renderer = {
             text = '\\_';
         }
         return text;
+    },
+
+    listitem(text) {
+        return `<li><p>${text}</p></li>\n`;
     }
 };
 marked.use({ renderer });
