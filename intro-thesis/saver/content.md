@@ -4,8 +4,6 @@
 
 ## 概要
 
-$\fre{1}$
-
 SAVER
 
 memory leak, double-free, use-after-free といったメモリエラーを scalable, precise, safe な方法で自動的に修復する
@@ -66,13 +64,13 @@ for (Node *node = lx; node != NULL; node = node->next) {
 
 - `append_data` が `-1` を返したときに `dptr` が解放されない (memory leak).
 
-- <p>静的解析ツールの Infer では以下のエラーを出す.</p>
+- 静的解析ツールの Infer では以下のエラーを出す.
 
 ```
 Object allocated at line 12 is unreachable at line 15.
 ```
 
-- <p>このプログラムと Infer などの静的解析ツールによる error report を入力として, SAVER は自動的に以下のようなパッチを生成する.</p>
+- このプログラムと Infer などの静的解析ツールによる error report を入力として, SAVER は自動的に以下のようなパッチを生成する.
 
 ```diff_c=
 int append_data(Node *node, int *ndata) {
@@ -201,7 +199,7 @@ SAVER の動作ステップ
 
 #### 1. Object Flow Graph (OFG) の作成
 
-- <p>初めに SAVER は静的ヒープ解析を行い, 入力プログラムを OFG に変換する</p>
+- 初めに SAVER は静的ヒープ解析を行い, 入力プログラムを OFG に変換する
 
 ```c=
 p = malloc(1);  // o1
