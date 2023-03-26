@@ -50,7 +50,7 @@ const renderer = {
             code = code.replace(/\<\/div\>\n/g, '</div>');
         }
 
-        code = code.replace(/\n(.*)\<span class=\"hljs-comment\"\>.*\@\@\((.*)\)\@\@\<\/span\>\n/g, '<div style="min-width:inherit;$2">$1</div>');
+        code = code.replace(/\n(.*)\<span class=\"hljs-comment\"\>.*\@\@\((.*)\)\@\@.*\<\/span\>\n/g, '<div style="min-width:inherit;$2">$1</div>');
 
         if (!lang) {
             return '<div class="code-block"><pre class="code-linenum-main"><code>'
@@ -78,6 +78,9 @@ const renderer = {
     },
 
     text(text) {
+        if (text.match(/\_c/)) {
+            // console.log(text);
+        }
         if (text === '{') {
             text = '\\{';
         } else if (text === '}') {
@@ -86,6 +89,11 @@ const renderer = {
             text = '\\(';
         } else if (text === ')') {
             text = '\\)';
+        } else if (text === '\\') {
+            text = '\\\\';
+        } else if (text === '\_') {
+            //console.log(text);
+            text = '\\_';
         }
         return text;
     }
@@ -93,7 +101,7 @@ const renderer = {
 marked.use({ renderer });
 
 fetch('./content.md').then(r => { return r.text() }).then(file => {
-    const content = document.getElementById('content');
-    content.innerHTML = marked.parse(file);
+    $('#content').html(marked.parse(file));
+    var x = Math.random(1)
     MathJax.typeset();
 });

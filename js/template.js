@@ -158,7 +158,7 @@ function setJCHref() {
 
 function setITHref() {
     // intro-thesis
-    $(".it-saver").attr("href", urlHeader + "/");
+    $(".it-saver").attr("href", urlHeader + "/intro-thesis/saver");
 }
 
 function setPRHref() {

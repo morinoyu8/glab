@@ -1,3 +1,12 @@
+// $.getScript(urlHeader + '/js/markdown-to-html.js', function() { 
+//     $('#footer').attr({
+//         'style': 'display: block;'
+//     });
+//     $('.main-item').attr({
+//         'style': 'display: block;'
+//     });
+// });
+
 var urlHeader = ''
 if (location.href.indexOf('https://morinoyu8.github.io') >= 0) {
     urlHeader = '/glab';
@@ -43,6 +52,10 @@ $(document).ready(function() {
     }).appendTo('body');
 });
 
+$(document).on('load', function() {
+    console.log('hello');
+})
+
 var headSrc = [urlHeader + '/js/mathjax-config.js',
                'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
                'https://polyfill.io/v3/polyfill.min.js?features=es6',
@@ -51,6 +64,7 @@ var headSrc = [urlHeader + '/js/mathjax-config.js',
                'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/c.min.js',
                'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/python.min.js'];
 
+var e_time = new Date(); 
 loadHeadSrc(0);
 
 function loadHeadSrc(i) {

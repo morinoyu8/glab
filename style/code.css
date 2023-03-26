@@ -1,14 +1,16 @@
 .code-block {
     display: flex;
     background-color: var(--background-color);
-    padding: 15px 20px 15px 15px;
+    padding: 15px 20px 0 15px;
     border-radius: 8px;
+    margin-top: 15px;
     margin-bottom: 25px;
 }
 
 pre {
     margin: 0;
     display: block;
+    padding-bottom: 15px;
     overflow-x: scroll;
 }
 
@@ -19,6 +21,7 @@ code {
     margin: 0 4px;
     font-size: 11pt;
     line-height: 150%;
+    font-family: "Ricty Diminished", Ricty, "Myrica M", "Migu 1M", "Source Han Code JP", SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 pre code {

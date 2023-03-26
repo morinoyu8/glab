@@ -103,7 +103,20 @@ p, h5, h6 {
 ul {
     margin-top: 14px;
     padding-left: 30px;
-    padding-right: 30px;
+    padding-right: 20px;
+}
+
+li ul {
+    margin-top: 0;
+    padding-right: 0;
+}
+
+li ul:last-child {
+    margin-bottom: 20px;
+}
+
+li ul ul:last-child {
+    margin-bottom: 10px;
 }
 
 .no-line-height {
@@ -116,6 +129,11 @@ ul {
 .no-under-line {
     border-bottom: 0px solid;
 }
+
+/* mjx-container {
+    overflow-x: scroll;
+    overflow-y: hidden;
+} */
 
 @media screen and (max-width:480px) {
     .no-line-height {

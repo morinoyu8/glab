@@ -1,11 +1,5 @@
 # 進捗報告 2022-12-26
 
-$\displaystyle \frac{3}{4}$
-
-$$\sqrt{3} + \frac{1}{2} \{3\}$$
-
-https://morinoyu8.github.io/glab/
-
 ## 方向性
 
 - <p>使われなくなったオブジェクトをより早く解放したい</p>
@@ -14,8 +8,6 @@ example
 
 ```c=
 #include <ggg.h>
-
-\\
 
 // main
 int main(void) {
@@ -56,7 +48,7 @@ int main(void) {
 +           free(str);
 +           str = NULL;
 -           str = NULL;
-            flag = 1;
+-           flag = 1;
         }
         x = x + 1;
 
