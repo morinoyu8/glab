@@ -78,40 +78,56 @@ const renderer = {
     },
 
     text(text) {
-        if (text.match(/\_c/)) {
-            // console.log(text);
-        }
         if (text === '{') {
             text = '\\{';
         } else if (text === '}') {
             text = '\\}';
         } else if (text === '(') {
             text = '\\(';
-        jki9} else if (text === ')') {
+        } else if (text === ')') {
             text = '\\)';
         } else if (text === '\\') {
             text = '\\\\';
         } else if (text === '\_') {
-            //console.log(text);
             text = '\\_';
         }
         return text;
     },
 
     listitem(text) {
-        console.log('1: ' + text);
         if (text.match(/\<p\>/)) {
             return `<li>${text}</li>\n`;
         }
         text = text.replace(/\<li\>[^(\<p\>)](.*)\<\/li\>/g, '<li><p>$2</p></li>');
-        console.log('2:' + text);
         return `<li><p>${text}</p></li>\n`;
+    },
+
+    html(html) {
+        html = html.replace(/\<summary\>(.*)\<\/summary\>/g, '<summary><p style="display: inline;">$1</p></summary>');
+        return html;
     }
 };
 marked.use({ renderer });
 
+MathJax.Hub.Config({
+    loader: {load: ['[tex]/braket']},
+    tex: {packages: {'[+]': ['braket']}}
+});
+
 fetch('./content.md').then(r => { return r.text() }).then(file => {
     $('#content').html(marked.parse(file));
+
+    const mainMaxWidth = 800.0;
+    for (let i = 5; i <= 100; i += 5) {
+        $('.img-' + i).css('width', Math.min(100, (mainMaxWidth / $('main').width()) * i) + '%');
+    }
+
+    $(window).resize(function() {
+        for (let i = 5; i <= 100; i += 5) {
+            $('.img-' + i).css('width', Math.min(100, (mainMaxWidth / $('main').width()) * i) + '%');
+        }
+    });
+
     MathJax.Hub.Typeset(null, function() {
         MathJax.Hub.Config({
             tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },

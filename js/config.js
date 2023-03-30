@@ -9,7 +9,8 @@ var style = [urlHeader + '/style/main.css',
              urlHeader + '/style/footer.css',
              urlHeader + '/style/mainpage.css',
              urlHeader + '/style/code.css',
-             urlHeader + '/style/math.css'];
+             urlHeader + '/style/math.css',
+             urlHeader + '/style/image.css'];
 
 for (var i in style) {
     $('<link>').attr({

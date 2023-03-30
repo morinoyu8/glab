@@ -20,6 +20,7 @@ main {
     padding: 0 30px;
     max-width: 800px;
     text-align: center;
+    overflow: hidden;
 }
 
 .main-item {
@@ -100,7 +101,7 @@ p, h5, h6 {
     
 }
 
-ul {
+ul, ol {
     margin-top: 14px;
     padding-left: 30px;
     padding-right: 20px;
@@ -112,10 +113,12 @@ li ul {
 }
 
 li ul:last-child {
+    margin-top: 6px;
     margin-bottom: 20px;
 }
 
 li ul ul:last-child {
+    margin-top: 6px;
     margin-bottom: 10px;
 }
 
@@ -128,6 +131,28 @@ li ul ul:last-child {
 
 .no-under-line {
     border-bottom: 0px solid;
+}
+
+details {
+    margin-bottom: 15px;
+}
+
+details[open] {
+    margin-bottom: 30px;
+}
+
+details[open] summary {
+    margin-bottom: 0;
+}
+
+details .details-inner {
+    border-left: 4px solid #cccccc;
+    padding-left: 30px;
+    margin-left: 5px;
+}
+
+summary:hover {
+    cursor: pointer;
 }
 
 @media screen and (max-width:480px) {
