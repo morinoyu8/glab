@@ -151,7 +151,7 @@ function setFooterPosition() {
 function setHref(sec) {
     $.getJSON(urlHeader + '/lists/' + sec + '.json', (data) => {
         for(let item of data){
-            item.link.replace(/^\/(.*)/, urlHeader + '/$1')
+            item.link.replace(/^\//, urlHeader + '/$1')
             $(item.id).attr('href', item.link);
         }
     });
