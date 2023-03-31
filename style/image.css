@@ -1,9 +1,14 @@
 img {
-    margin: 20px 15px 20px 0;
+    margin: 30px 15px 30px 0;
     display: block;
 }
 
 @media screen and (max-width:480px) {
+    img {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .img-50, .img-55, .img-60, .img-65, .img-70, .img-75, .img-80, .img-85, .img-90, .img-95, .img-100{
         margin-right: calc(50% - 50vw) !important;
         margin-left: calc(50% - 50vw + 10px) !important;

@@ -107,17 +107,21 @@ ul, ol {
     padding-right: 20px;
 }
 
-li ul {
+ul ul, ol ol {
+    padding-right: 0;
+}
+
+li ul, li ol {
     margin-top: 0;
     padding-right: 0;
 }
 
-li ul:last-child {
+li ul:last-child, li ol:last-child {
     margin-top: 6px;
     margin-bottom: 20px;
 }
 
-li ul ul:last-child {
+li li ul:last-child, li li ol:last-child {
     margin-top: 6px;
     margin-bottom: 10px;
 }
@@ -160,7 +164,19 @@ summary:hover {
         margin: 3px 0;
     }
 
-    li ul {
+    ul, ol {
         padding-left: 20px;
+    }
+
+    li ul, li ol {
+        padding-left: 16px;
+    }
+
+    details .details-inner {
+        padding-left: 10px;
+    }
+
+    details .details-inner img {
+        padding-left: 10px;
     }
 }
