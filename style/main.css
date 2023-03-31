@@ -107,6 +107,10 @@ ul, ol {
     padding-right: 20px;
 }
 
+li:has(ul) {
+    margin-top: 6px;
+}
+
 ul ul, ol ol {
     padding-right: 0;
 }
@@ -118,7 +122,7 @@ li ul, li ol {
 
 li ul:last-child, li ol:last-child {
     margin-top: 6px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 li li ul:last-child, li li ol:last-child {
@@ -151,7 +155,7 @@ details[open] summary {
 
 details .details-inner {
     border-left: 4px solid #cccccc;
-    padding-left: 30px;
+    padding-left: 20px;
     margin-left: 5px;
 }
 

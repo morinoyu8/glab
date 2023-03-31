@@ -7,24 +7,24 @@ var clickEventType = (( window.ontouchstart!==null ) ? "click":"touchend");
 $("#header").load(urlHeader + "/templete/header.html", 
     function() {
         $("#title").attr("href", urlHeader + "/");
-        $(".jc").load(urlHeader + "/lists/journal-club.html",
+        $(".jc").load(urlHeader + "/templete/journal-club.html",
             function() {
-                setJCHref();
+                setHref('journal-club');
             }
         );
-        $(".it").load(urlHeader + "/lists/intro-thesis.html",
+        $(".it").load(urlHeader + "/templete/intro-thesis.html",
             function() {
-                setITHref();
+                setHref('intro-thesis');
             }
         );
-        $(".pr").load(urlHeader + "/lists/progress-report.html",
+        $(".pr").load(urlHeader + "/templete/progress-report.html",
             function() {
-                setPRHref();
+                setHref('progress-report');
             }
         );
-        $(".lt").load(urlHeader + "/lists/lt.html",
+        $(".lt").load(urlHeader + "/templete/lt.html",
             function() {
-                setLTHref();
+                setHref('lt');
             }
         );
         $("#header-jc").attr("href", urlHeader + "/#jc");
@@ -148,40 +148,11 @@ function setFooterPosition() {
 }
 
 
-function setJCHref() {
-    // journal-club
-    $(".jc-isa-5").attr("href", urlHeader + "/test");
-    $(".jc-isa-3a").attr("href", urlHeader + "/markdown-test");
-    $(".jc-pba-13b").attr("href", urlHeader + "/");
-    $(".jc-pba-11").attr("href", urlHeader + "/");
-}
-
-function setITHref() {
-    // intro-thesis
-    $(".it-saver").attr("href", urlHeader + "/intro-thesis/saver");
-}
-
-function setPRHref() {
-    // progress-report
-    $(".pr-2023-01-23").attr("href", urlHeader + "/");
-    $(".pr-2023-01-12").attr("href", urlHeader + "/");
-    $(".pr-2022-12-26").attr("href", urlHeader + "/");
-    $(".pr-2022-12-19").attr("href", urlHeader + "/");
-    $(".pr-2022-12-12").attr("href", urlHeader + "/");
-    $(".pr-2022-12-05").attr("href", urlHeader + "/");
-    $(".pr-2022-11-28").attr("href", urlHeader + "/");
-    $(".pr-2022-11-06").attr("href", urlHeader + "/");
-    $(".pr-2022-10-24").attr("href", urlHeader + "/");
-    $(".pr-2022-10-17").attr("href", urlHeader + "/");
-}
-
-function setLTHref() {
-    // LT
-    $(".lt-2022-7").attr("href", urlHeader + "/");
-    $(".lt-2022-6").attr("href", urlHeader + "/");
-    $(".lt-2022-5").attr("href", urlHeader + "/");
-    $(".lt-2022-4").attr("href", urlHeader + "/");
-    $(".lt-2022-3").attr("href", urlHeader + "/");
-    $(".lt-2022-2").attr("href", urlHeader + "/");
-    $(".lt-2022-1").attr("href", urlHeader + "/");
+function setHref(sec) {
+    $.getJSON(urlHeader + '/lists/' + sec + '.json', (data) => {
+        for(let item of data){
+            item.link.replace(/^\/(.*)/, urlHeader + '/$1')
+            $(item.id).attr('href', item.link);
+        }
+    });
 }

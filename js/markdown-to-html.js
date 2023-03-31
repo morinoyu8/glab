@@ -20,9 +20,12 @@ const renderer = {
                 linenum = 1;
         }
 
-        if (lang.match(/diff_/)) {
+        if (lang.match(/diff/)) {
             const info = lang.split('_');
-            lang = info[1];
+            if (info.length == 1)
+                lang = '';
+            else
+                lang = info[1];
             diffLang = true
         }
 
@@ -52,17 +55,25 @@ const renderer = {
 
         code = code.replace(/\n(.*)\<span class=\"hljs-comment\"\>.*\@\@\((.*)\)\@\@.*\<\/span\>\n/g, '<div style="min-width:inherit;$2">$1</div>');
 
-        if (!lang) {
-            return '<div class="code-block"><pre class="code-linenum-main"><code>'
-            + code // (escaped ? code : escape(code, true))
-            + '</code></pre></div>\n';
-        }
-
         if (linenum < 0) {
+            if (!lang) {
+                return '<div class="code-block"><pre class="code-linenum-main"><code>'
+                + code // (escaped ? code : escape(code, true))
+                + '</code></pre></div>\n';
+            }
+
             return '<div class="code-block"><pre class="code-linenum-main"><code class="'
             + this.options.langPrefix
             + lang // escape(lang)
             + '">'
+            + code // (escaped ? code : escape(code, true))
+            + '</code></pre></div>\n';
+        }
+
+        if (!lang) {
+            return '<div class="code-block"><pre class="code-linenum"><code>'
+            + strLinenum
+            + '</code></pre><pre class="code-linenum-main"><code>'
             + code // (escaped ? code : escape(code, true))
             + '</code></pre></div>\n';
         }
