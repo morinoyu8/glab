@@ -91,8 +91,7 @@ header{
 
 .hamburger-nav .nav-inner {
     display: block;
-    max-width: 480px;
-    margin: 20px auto;
+    margin: 20px 40px 20px 40px;
 }
 
 .nav-inner a {
@@ -210,6 +209,10 @@ header{
 
     .jc-nav, .it-nav, .pr-nav, .lt-nav {
         display: none;
+    }
+
+    .hamburger-nav .nav-inner{
+        margin: 20px auto;
     }
 }
 
