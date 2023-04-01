@@ -116,7 +116,28 @@ const renderer = {
     html(html) {
         html = html.replace(/\<summary\>(.*)\<\/summary\>/g, '<summary><p style="display: inline;">$1</p></summary>');
         return html;
-    }
+    },
+
+    table(header, body) {
+        if (body) 
+            body = `<tbody>${body}</tbody>`;
+    
+        return '<div class="table-outer"><table cellspacing="0">\n'
+          + '<thead>\n'
+          + header
+          + '</thead>\n'
+          + body
+          + '</table></div>\n';
+    },
+
+    tablecell(content, flags) {
+        const type = flags.header ? 'th' : 'td';
+        const tag = flags.align
+          ? `<${type} align="${flags.align}">`
+          : `<${type}>`;
+        return tag + '<p>' + content + `</p></${type}>\n`;
+      }
+
 };
 marked.use({ renderer });
 

@@ -3,6 +3,7 @@
     --background-color: #f4f4f4;
     --header-subcolor: #bce8a9;
     --gray-color: #555555;
+    --table-border-color: #aaaaaa;
 }
 
 html {
@@ -161,6 +162,28 @@ details .details-inner {
 
 summary:hover {
     cursor: pointer;
+}
+
+.table-outer {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    overflow-x: scroll;
+}
+
+th:first-child, td:first-child {
+    border-left: 1px solid var(--table-border-color);
+}
+
+th, td {
+    padding: 2px 10px;
+    border-right: 1px solid var(--table-border-color);
+    border-bottom: 1px solid var(--table-border-color);
+}
+
+th {
+    border-top: 1px solid var(--table-border-color);
+    background-color: var(--background-color);
 }
 
 @media screen and (max-width:480px) {

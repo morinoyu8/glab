@@ -2,6 +2,12 @@
 
 ## 方向性
 
+|   |  memory leak | use after free | double free | path sensitivity | element sensitivity | scalability | scalability |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|  SAVER    | ○ | ○ | ○ | ○ | × | ○ | ○ |
+|  MEMFIX   | ○ | ○ | ○ | × | × | × | ○ |
+|  提案手法  | ○ | × | × | ○ | ○ | × | ○ |
+
 - <p>使われなくなったオブジェクトをより早く解放したい</p>
 
 example
