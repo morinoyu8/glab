@@ -53,7 +53,7 @@ const renderer = {
             code = code.replace(/\<\/div\>\n/g, '</div>');
         }
 
-        code = code.replace(/\n(.*)\<span class=\"hljs-comment\"\>.*\@\@\((.*)\)\@\@.*\<\/span\>\n/g, '<div style="min-width:inherit;$2">$1</div>');
+        code = code.replace(/\n(.*)\<span class=\"hljs-comment\"\>(.*)\@\@\((.*)\)\@\@.*\<\/span\>\n/g, '<div style="min-width:inherit;$3">$1<span class="hljs-comment">$2</span></div>');
 
         if (linenum < 0) {
             if (!lang) {
@@ -147,18 +147,8 @@ MathJax.Hub.Config({
 });
 
 fetch('./content.md').then(r => { return r.text() }).then(file => {
-    $('#content').html(marked.parse(file));
-
-    const mainMaxWidth = 800.0;
-    for (let i = 5; i <= 100; i += 5) {
-        $('.img-' + i).css('width', Math.min(100, (mainMaxWidth / $('main').width()) * i) + '%');
-    }
-
-    $(window).resize(function() {
-        for (let i = 5; i <= 100; i += 5) {
-            $('.img-' + i).css('width', Math.min(100, (mainMaxWidth / $('main').width()) * i) + '%');
-        }
-    });
+    $('#content').html(parseExtension(marked.parse(file)));
+    imageSizeSetting();
 
     MathJax.Hub.Typeset(null, function() {
         MathJax.Hub.Config({
@@ -173,3 +163,38 @@ fetch('./content.md').then(r => { return r.text() }).then(file => {
     });
 });
 
+function parseExtension(html) {
+    return html;
+}
+
+// function parseExtension(html) {
+//     html = parseTab(html);
+//     return html;
+// }
+
+// function parseTab(html) {
+//     // remove p tag
+//     html = html.replace(/\<p\>\@\@/g, '@@');
+//     html = html.replace(/\@\@\<\/p\>/g, '@@');
+//     // add div of tab class
+//     html = html.replace(/\@\@\@\(tab,\s?(.*?)\)\@\@\@/g, '<div class="tab" id="$1"><div class="tab-nav"></div><div class="tab-main">');
+//     const tab = html.match(/\@\@\((.*?),\s?(.*?)\)\@\@/g);
+//     console.log(tab);
+//     html = html.replace(/\@\@\((.*?),\s?(.*?)\)\@\@/g, '<div id="main-$2">');
+//     html = html.replace(/\@\@\@\(\/\)\@\@\@/g, '</div></div>');
+//     html = html.replace(/\@\@\(\/\)\@\@/g, '</div>');
+//     return html;
+// }
+
+function imageSizeSetting() {
+    const mainMaxWidth = 800.0;
+    for (let i = 5; i <= 100; i += 5) {
+        $('.img-' + i).css('width', Math.min(100, (mainMaxWidth / $('main').width()) * i) + '%');
+    }
+
+    $(window).resize(function() {
+        for (let i = 5; i <= 100; i += 5) {
+            $('.img-' + i).css('width', Math.min(100, (mainMaxWidth / $('main').width()) * i) + '%');
+        }
+    });
+}
