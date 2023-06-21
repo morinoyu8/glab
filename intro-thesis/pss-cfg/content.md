@@ -105,9 +105,13 @@ else { p = 0; S; }
 
 #### 各ノードが持つもの
 
+Witness path と補間式はノードをマージするときに必要
+
 - 依存集合 (Dependency set)
 
   Target 変数に影響を与える変数の集合
+
+  スライシングで用いる
 
 - Witness path
 
@@ -115,15 +119,17 @@ else { p = 0; S; }
 
   Witness 式 : Witness path を $\wedge$ で結合したもの 
 
-  実行可能なパスを見つけたら, そこから逆向きに計算していく
+  実行可能なパスの最終地点から逆向きに計算していく
 
 - 補間式 (Interpolant)
 
-  そのノードからの実行不可能なパスが満たさない性質
+  そのノードからの実行不可能なパスを通らないことを保証できる性質
 
   なるべく大きい範囲を取ると別のノードからマージされやすくなる
 
   実行不可能なパスを見つけたら, そこから逆向きに計算していく
+
+<img src="images/image04.png" class="img-80" />
 
 #### ノードをマージするとき
 
@@ -142,8 +148,38 @@ else { p = 0; S; }
 
 - A の witness 式は A の各依存変数が target 変数に影響を与えるまでの条件
 
-  - (A の各依存変数の witness 式) $\wedge$ (B までの性質) で成り立たないものがある
+  - (A の各依存変数の witness 式) $\wedge$ (B までの性質) で充足不可能なものがある
 
     -> B から A にはない実行不可能なパスが存在する (精度の向上)
 
     <img src="images/image03.png" class="img-100" />
+
+
+<br/>
+
+[**Example**](slides/pss-cfg-1.pdf)
+
+<br/>
+
+
+### Step2: スライシング
+
+Target 変数の最終的な値が変わらないように記号実行木をスライシング
+
+<img src="images/image05.png" class="img-90" />
+
+#### 3つの変換ルール
+
+1. 代入文の左辺がそれ以降の依存集合に現れなければその文を削除
+
+  <img src="images/image06.png" class="img-45" />
+
+2. ある分岐点からの実行可能なパスが 1つしかないとき, その分岐文を削除
+
+  <img src="images/image07.png" class="img-45" />
+
+3. 分岐の "then", "else" 節両方に target 変数に影響を与える文がない かつ
+  
+   分岐の最終地点でノードがマージされているとき, 分岐全体を削除
+
+   <img src="images/image08.png" class="img-55" />
