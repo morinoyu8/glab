@@ -1,5 +1,9 @@
 [
     {
+        "id": ".it-pss-cfg",
+        "link": "/intro-thesis/pss-cfg"
+    },
+    {
         "id": ".it-saver",
         "link": "/intro-thesis/saver"
     }
