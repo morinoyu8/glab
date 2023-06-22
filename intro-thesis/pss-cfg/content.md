@@ -125,7 +125,7 @@ Witness path と補間式はノードをマージするときに必要
 
   そのノードからの実行不可能なパスを通らないことを保証できる性質
 
-  なるべく大きい範囲を取ると別のノードからマージされやすくなる
+  なるべく緩い条件を取ると別のノードからマージされやすくなる
 
   実行不可能なパスを見つけたら, そこから逆向きに計算していく
 
@@ -183,3 +183,160 @@ Target 変数の最終的な値が変わらないように記号実行木をス�
    分岐の最終地点でノードがマージされているとき, 分岐全体を削除
 
    <img src="images/image08.png" class="img-55" />
+
+
+## Algorithm
+
+今まで見てきた手法を形式的に表す
+
+### 事前準備
+
+#### プログラム言語
+
+ここで扱うプログラミング言語は簡単なもの
+
+- 変数集合 $Var$ : 型はすべて整数
+
+- 命令 (命令集合 $Ops$)
+
+  - 代入 `x := e`
+
+  - 仮定 `assume(c)` 
+
+- プログラムの遷移 $~\ell \stackrel{\mathsf{op}}{\longrightarrow} \ell^{\prime}$  ( $\ell$ はプログラムポイント )
+
+<details>
+<summary>Example</summary>
+<div class="details-inner">
+
+```c=
+y = 0;
+if (x > 0)
+    z = 1;
+else
+    z = 0;
+w = 1;
+```
+
+```=
+y := 0
+assume(x > 0)
+z := 1
+assume(x <= 0)
+z := 0
+w := 1
+```
+
+$1 \stackrel{\mathsf{y\ :=\ 0}}{\longrightarrow} 2$
+
+$2 \stackrel{\mathsf{assume(x > 0)}}{\longrightarrow} 3$
+
+$3 \stackrel{\mathsf{z\ :=\ 1}}{\longrightarrow} 6$
+
+$2 \stackrel{\mathsf{assume(x <= 0)}}{\longrightarrow} 5$
+
+$5 \stackrel{\mathsf{z\ :=\ 0}}{\longrightarrow} 6$
+
+$6 \stackrel{\mathsf{w\ :=\ 1}}{\longrightarrow} 7$
+
+</div>
+</details>
+
+<br/>
+
+#### シンボリック実行
+
+##### シンボリック状態 
+
+$$v : \langle\ell, s, \Pi\rangle$$
+
+- $\ell$ : プログラムポイント
+
+- $s$ : シンボリックストア : プログラム変数からシンボル変数への関数
+
+  $s$ における式 $e$ の評価 $[e]_s$
+
+  - 変数 $v$ : $<v _s = s(v)$
+
+  - 整数 $n$ : $[n] _s = n$
+
+  - $[e\ \mathsf{op}\ e']_s = [e]_s\ \mathsf{op}\ [e']_s$
+
+- $\Pi$ : パス条件
+
+<br/>
+
+##### シンボリック実行
+
+$v \equiv\langle\ell, s, \Pi\rangle$, $\ell \stackrel{\mathsf{op}}{\longrightarrow} \ell^{\prime}$ におけるシンボリック実行
+
+$$v^{\prime} \triangleq \begin{cases}\left\langle\ell^{\prime}, s, \Pi \wedge [ c ] _s\right\rangle & \text { if op } \equiv \text { assume(c) }\ \text{ and }\  \Pi \wedge [ c ] _s \text { is satisfiable } \\ \left\langle\ell^{\prime}, s[x \mapsto [ e ] _s], \Pi\right\rangle & \text { if } \mathrm{op} \equiv \mathrm{x}:=\mathrm{e}\end{cases}$$
+
+- パス条件に $c$ を追加
+
+  $\Pi \wedge [ c ] _s$ が充足可能かどうかは制約ソルバーを用いる
+
+- シンボリックストアに $x$ を追加
+
+<br/>
+
+##### 変数の条件とパス条件の結合
+
+$$[v] : \left(\bigwedge_ {x \in \operatorname{Vars}} [x] _s\right) \wedge \Pi$$
+
+<br/>
+
+#### 補間式の定義
+
+$A \wedge B$ が $false$ となる一階論理式 $A,\ B$ が与えられたとき, 補間式 $\overline{\Psi}$ は以下のように定義される
+
+1. $A \models \overline{\Psi}$
+
+2. $B \wedge \overline{\Psi}$ が $false$
+
+3. $\overline{\Psi}$ の変数は $A, B$ の共通の変数
+
+<details>
+<summary>Example</summary>
+<div class="details-inner">
+
+ここで扱う補間式の性質:
+
+そのノードから実行不可能なパスを通らないことを保証できる性質
+
+<img src="images/image09.png" class="img-50" />
+
+分岐直前のシンボリック状態 $v$ に対して
+
+$$[v] : x = 1 \wedge y = 10 \wedge y > 5$$
+
+$A : x = 1 \wedge y = 10 \wedge y > 5$, $\ B : y \leq 0\ $ としたとき
+
+1. $x = 1 \wedge y = 10 \wedge y > 5 \models \overline{\Psi}$ 
+
+2. $y \leq 0 \wedge \overline{\Psi}$ が $false$
+
+3. $\overline{\Psi}$ の変数は $A, B$ の共通の変数
+
+となる補間式 $\overline{\Psi}$ の一つは $y > 0$.
+
+<br/>
+
+この例での補間式 $\overline{\Psi}$ は $y > 1$ なども満たすが, $y > 0$ が最も良い.
+
+別のシンボリック状態 $v'$ が $v$ に sound にマージできるということは $v'$ が $v$ からの実行不可能なパスを絶対に通らないということ.
+
+$$ [v'] \models \overline{\Psi}_s $$
+
+よって $\overline{\Psi}_s$ の条件が緩い方がマージされる可能性が高くなる.
+
+</div>
+</details>
+
+<br/>
+
+#### Witness path の定義
+
+Target 変数の集合を $\mathcal{V}$ とする
+
+シンボリック状態 $v \equiv\langle\ell, s, \Pi\rangle$
