@@ -286,7 +286,19 @@ $$[v] : \left(\bigwedge_ {x \in \operatorname{Vars}} [x] _s\right) \wedge \Pi$$
 
 <br/>
 
-#### 補間式の定義
+#### 記号実行木
+
+シンボリック状態 $v \equiv\langle\ell, s, \Pi\rangle$ をノードとして, 以下の2つの情報を付加する
+
+- 補間式 : $\overline{\Psi}$
+
+- 依存変数と witness 式の組 : $\langle x, \omega_x\rangle$
+
+<img src="images/image10.png" class="img-40" />
+
+<br/>
+
+#### 補間式
 
 $A \wedge B$ が $false$ となる一階論理式 $A,\ B$ が与えられたとき, 補間式 $\overline{\Psi}$ は以下のように定義される
 
@@ -335,8 +347,172 @@ $$ [v'] \models \overline{\Psi}_s $$
 
 <br/>
 
-#### Witness path の定義
+#### 依存変数
 
-Target 変数の集合を $\mathcal{V}$ とする
+依存集合 : $\sigma _v$
 
-シンボリック状態 $v \equiv\langle\ell, s, \Pi\rangle$
+- プログラムの最終地点における $\sigma _v$ : Target 変数の集合 $\mathcal{V}$
+
+- Backward に依存集合を更新
+
+  $v \stackrel{\mathsf{op}}{\longrightarrow} v^{\prime}$ とする
+
+  - $\mathsf{op} \equiv \mathsf{x := e}$ のとき
+
+    - $\mathsf{x}$ が $\sigma_{v'}$ に含まれる ($\ \sigma_{v'} \cap def(\mathsf{op}) \neq \emptyset\ $) のとき
+
+$$\sigma_v\ \triangleq\ \left(\sigma_{v^{\prime}} \backslash def(\mathsf{op})\right) \cup use(\mathsf{op})$$
+
+<ul>
+<ul>
+<ul>
+
+この条件を満たして依存変数が更新されたとき, $\ v \stackrel{\mathsf{op}}{\longrightarrow} v^{\prime}$ が "スライスに含まれる" と言う
+
+</ul>
+</ul>
+</ul>
+
+<ul>
+<ul>
+
+- それ以外のとき
+
+$$\sigma_v\ \triangleq\ \sigma_{v'}$$
+
+</ul>
+
+- $\mathsf{op} \equiv \mathsf{assume}(c)$ のとき
+
+  - この命令から分岐の合流地点までの命令のいずれかがスライスに含まれるとき
+
+$$\sigma_v\ \triangleq\ \sigma_{v^{\prime}} \cup u s e(\mathsf{op})$$
+
+<ul>
+<ul>
+
+この条件を満たして依存変数が更新されたとき, $\ v \stackrel{\mathsf{op}}{\longrightarrow} v^{\prime}$ が "スライスに含まれる" と言う
+
+</ul>
+
+- それ以外のとき
+
+$$\sigma_v\ \triangleq\ \sigma_{v'}$$
+
+</ul>
+</ul>
+
+<details>
+<summary>Example</summary>
+<div class="details-inner">
+
+$v \stackrel{\mathsf{op}}{\longrightarrow} v^{\prime}$, $\mathsf{op} \equiv \mathsf{x := y + z}$ 
+
+$x \in \sigma _{v'}$ のとき
+
+$$\sigma_v = \left(\sigma_{v^{\prime}} \backslash \{x\} \right) \cup \{ y, z \}$$
+
+</div>
+</details>
+
+<br/>
+
+#### 依存変数と witness 式
+
+Target 変数の集合 : $\mathcal{V}$
+
+シンボリック状態 $v$ の依存変数 $x \in \sigma_v$ が $\mathcal{V}$ の変数に影響を与えるまでのパス 
+
+$$\pi \equiv v \dots v_{end}$$ 
+
+を witness path とする. 
+
+witness 式 $\ \omega_x$ : パス $\pi$ について変数とパスの条件を結合したもの
+
+<br/>
+
+依存変数と witness 式の組を考える
+
+抽象ドメイン : $\ \ \mathcal{D} \triangleq\{\perp\} \cup \mathcal{P}(Vars \times FOL)$
+
+
+これ以降は依存変数と witness 式の組の集合を $\sigma$ で表す
+
+
+<br/>
+
+#### マージ
+
+シンボリック状態 : $v \equiv \langle\ell, s, \Pi\rangle$ 
+
+すでに計算された状態 :  $v' \equiv \langle\ell, s', \Pi'\rangle$ 
+
+$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $ 補間式 : $ \overline{\Psi}_{v'} $ 
+
+$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $ 依存変数と witness 式の組の集合 : $ \sigma_{v'} $
+
+<br/>
+
+次の条件を満たすとき $v$ は $v'$ にマージできる
+
+1. $[v] \models \overline{\Psi}_{v'}$
+
+2. $\forall \langle x, \cdot \rangle \in \sigma_{v'},\ \exists \langle x, \omega_x \rangle \in \sigma_{v'}\ \ s.t\ \  [v] \wedge \omega_x \ $ が充足可能
+
+
+##### 1つ目の条件
+
+$$[v] \models \overline{\Psi}_{v'}$$
+
+$v$ の条件は補間式 $\overline{\Psi}_{v'}$ を満たす
+
+$v'$ からのパスは $v$ から実行不可能なパスを絶対に通らない (soundness)
+
+<br/>
+
+**補題 1 :**
+
+<ul>
+
+$[v] \models \overline{\Psi}_{v'}$ が成り立つとき, $v$ からの実行可能なパスの集合は $v'$ からの実行可能なパスの集合の 部分集合 である
+
+</ul>
+
+<details>
+<summary>背理法による証明</summary>
+<div class="details-inner">
+
+$v$ から実行可能で $v'$ から実行不可能なパス条件 $\Pi$ のパス $\pi$ が存在すると仮定する.
+
+- $\pi$ は $v'$ から実行不可能だから, $[v'] \wedge \Pi$ は充足不可能
+
+- 補間式の定義から $\overline{\Psi}_{v'} \wedge \Pi$ は充足不可能
+
+- これと $[v] \models \overline{\Psi}_{v'}$ から, $[v] \wedge \Pi$ は充足不可能
+
+これは $\pi$ が $v$ から実行可能であることに矛盾.
+
+</div>
+</details>
+
+<br/>
+
+##### 2つ目の条件
+
+<br/>
+
+<div style="text-align:center;">
+
+$\forall \langle x, \cdot \rangle \in \sigma_{v'},\ \exists \langle x, \omega_x \rangle \in \sigma_{v'}\ \ s.t\ \  [v] \wedge \omega_x \ $ が充足可能
+
+</div>
+
+<br/>
+
+<ul>
+
+$v'$ のすべての依存変数について $[v] \wedge \omega_x$ が充足可能となる witness 式が存在する
+
+  $v$ の中には
+
+</ul>
