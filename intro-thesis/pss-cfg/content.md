@@ -445,11 +445,7 @@ witness 式 $\ \omega_x$ : パス $\pi$ について変数とパスの条件を�
 
 シンボリック状態 : $v \equiv \langle\ell, s, \Pi\rangle$ 
 
-すでに計算された状態 :  $v' \equiv \langle\ell, s', \Pi'\rangle$ 
-
-$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $ 補間式 : $ \overline{\Psi}_{v'} $ 
-
-$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $ 依存変数と witness 式の組の集合 : $ \sigma_{v'} $
+すでに計算された状態 :  $v' \equiv \langle\ell, s', \Pi'\rangle$ (補間式 : $\overline{\Psi}_{v'}$, 依存変数と witness 式の組の集合 : $\sigma _ { v ' }$)
 
 <br/>
 
@@ -544,7 +540,202 @@ $v$ が $v'$ にマージ可能とする. このとき, $v$ をマージせず�
 </div>
 </details>
 
- <br/>
+<br/>
 
 ### Step1: 記号実行木の生成
 
+<img src="images/image12.png" class="img-85" />
+
+- 再帰的に記号実行を進める
+
+- GENPSSCFG : main 関数
+
+- MERGE : ノードをマージするときの関数
+
+- SPLIT : 分岐地点でのグラフの構築
+
+- SYMEXEC : 代入文でのグラフの構築
+
+- $\mathcal{S}$ : 記号実行木の要素 (辺やマージなどの情報)
+
+<br/>
+
+#### GENPSSCFG
+
+<img src="images/image11.png" class="img-50" />
+
+- 初期状態 $v \equiv\langle\ell_{start}, \epsilon, true \rangle$ から始める
+
+- 同じプログラムポイントを表すノードが存在し, マージ条件を満たすとき MARGE に移動
+
+<ul>
+<details>
+<summary>マージ条件</summary>
+<div class="details-inner">
+
+次の条件を満たすとき $v$ は $v'$ にマージできる
+
+1. $[v] \models \overline{\Psi}_{v'}$
+
+2. $\forall \langle x, \cdot \rangle \in \sigma_{v'},\ \exists \langle x, \omega_x \rangle \in \sigma_{v'}\ \ s.t\ \  [v] \wedge \omega_x \ $ が充足可能
+
+</div>
+</details>
+
+</ul>
+
+- $v$ が分岐地点のとき SPLIT へ移動
+
+- それ以外のとき SYMEXEC へ移動
+
+<br/>
+
+#### MARGE
+
+<img src="images/image13.png" class="img-30" />
+
+- $v'$ が $v$ にマージできるとき, 補間式と依存集合を $v$ に合わせる
+
+  - 補題1と定理1より, sound かつ精度を落とさない
+
+- $\mathcal{S}$ に $v$ と $v'$ がマージした情報を追加
+
+
+<br/>
+
+#### SPLIT
+
+<img src="images/image14.png" class="img-45" />
+
+シンボリック状態 $v$ の補間式と依存集合を計算 + 次のシンボリック状態 $v'$ を生成
+
+- (1行目) 補間式 $\overline{\Psi}_v$ の初期状態は $true$
+
+- (2行目) 各分岐について実行
+
+- (4行目) ループの処理 (後述)
+
+- (6行目) 次のシンボリック状態 $v'$ を生成 (パス条件を追加)
+
+<br/>
+
+<img src="images/image15.png" class="img-45" />
+
+- (7,8,9行目) $v'$ が実行不可能なとき (パス条件が充足可能か制約ソルバーに解かせる)
+
+  - $\mathcal{S}$ にこの分岐が実行不可能という情報を追加
+  
+  - 補間式は $false$, 依存集合は空集合に初期化
+
+- (11,12行目) $v'$ が実行可能なとき
+
+  - $\mathcal{S}$ にこの分岐の辺を追加
+
+  - 次の状態 $v'$ に移動
+
+- (13行目) 補間式の計算 (ここから後向きの計算)
+
+  - すべての分岐点での補間式の計算結果の $\wedge$ を取る
+
+  - $\widehat{wlp}$ : $\mathsf{assume}(c)$ を実行した後に条件 $\overline{\Psi}_{v '}$ が満たされるような初期条件のうち, 最も条件の緩いものを返す関数
+
+<ul>
+
+<details>
+<summary>Example</summary>
+<div class="details-inner">
+
+$\widehat{wlp}(false, \mathsf{assume}(x > 0)) \=\ x \leq 0$
+
+$\widehat{wlp}(x > 10, \mathsf{assume}(y > 0)) \ =\ x > 10$
+
+</div>
+</details>
+
+</ul>
+</ul>
+
+<br/>
+
+<img src="images/image16.png" class="img-45" />
+
+- ここからは今までと別のループ
+
+- (14行目) 依存集合と witness path を後向きに計算 ( $\sqcup$ = $\cup$ )
+
+- (15行目) $v \stackrel{\mathsf{assume}(c)}{\longrightarrow} v^{\prime}$ がスライスに含まれるとき
+
+  - $\mathcal{S}$ にこの辺がスライスに含まれるという情報を追加
+
+<ul>
+<ul>
+
+<details>
+<summary>スライスに含まれる</summary>
+<div class="details-inner">
+
+  $v \stackrel{\mathsf{op}}{\longrightarrow} v^{\prime}$ とする
+
+  - $\mathsf{op} \equiv \mathsf{x := e}$ のとき
+
+    - $\mathsf{x}$ が $\sigma_{v'}$ に含まれる ($\ \sigma_{v'} \cap def(\mathsf{op}) \neq \emptyset\ $) のとき
+
+$$\sigma_v\ \triangleq\ \left(\sigma_{v^{\prime}} \backslash def(\mathsf{op})\right) \cup use(\mathsf{op})$$
+
+<ul>
+<ul>
+
+この条件を満たして依存変数が更新されたとき, $\ v \stackrel{\mathsf{op}}{\longrightarrow} v^{\prime}$ が "スライスに含まれる" と言う
+
+</ul>
+
+- それ以外のとき
+
+$$\sigma_v\ \triangleq\ \sigma_{v'}$$
+
+</ul>
+
+- $\mathsf{op} \equiv \mathsf{assume}(c)$ のとき
+
+  - この命令から分岐の合流地点までの命令のいずれかがスライスに含まれるとき
+
+$$\sigma_v\ \triangleq\ \sigma_{v^{\prime}} \cup u s e(\mathsf{op})$$
+
+<ul>
+<ul>
+
+この条件を満たして依存変数が更新されたとき, $\ v \stackrel{\mathsf{op}}{\longrightarrow} v^{\prime}$ が "スライスに含まれる" と言う
+
+</ul>
+
+- それ以外のとき
+
+$$\sigma_v\ \triangleq\ \sigma_{v'}$$
+
+</ul>
+</ul>
+
+</div>
+</details>
+
+</ul>
+</ul>
+
+<br/>
+
+#### SYMEXEC
+
+<img src="images/image17.png" class="img-40" />
+
+- (1,2行目) $v$ がプログラムの最終地点を表すなら, 補間式を $true$, 依存集合を target 変数の集合 $\mathcal{V}$ に
+
+<img src="images/image18.png" class="img-40" />
+
+- (4行目) 次の状態 $v'$ を生成し, (5行目) $\mathcal{S}$ に辺を追加
+- (6,7行目) ループの header でなければ次の状態 $v'$ に移動 (後述)
+- (8,9行目) 補間式, 依存集合を計算
+- (10,11行目) $v \stackrel{\mathsf{x := e}}{\longrightarrow} v^{\prime}$ がスライスに含まれるなら $\mathcal{S}$ にその情報を追加
+
+<br/>
+
+#### ループの扱い
