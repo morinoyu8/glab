@@ -511,8 +511,40 @@ $\forall \langle x, \cdot \rangle \in \sigma_{v'},\ \exists \langle x, \omega_x 
 
 <ul>
 
-$v'$ のすべての依存変数について $[v] \wedge \omega_x$ が充足可能となる witness 式が存在する
+$v'$ のすべての依存変数について $v$ から実行可能な witness path が 1つ以上存在する
 
-  $v$ の中には
+これはマージしても精度が低下しないことを保証する
+
+純粋な依存変数の集合 ($\neq$ witness path との組) を $\sigma'$ で表す
+
+最終的な精度が低下しないことは, 2つのマージするノードの $\sigma'$ が等しいことを言えば良い
 
 </ul>
+
+**定理 1 :**
+
+<ul>
+
+$v$ が $v'$ にマージ可能とする. このとき, $v$ をマージせずに記号実行を進めたとしても, 必ず $\sigma ' _v = \sigma ' _{v'}$ となる.
+
+</ul>
+
+<details>
+<summary>証明</summary>
+<div class="details-inner">
+
+- $\sigma ' _{v'} \subseteq \sigma ' _{v}$
+
+  $v$ が $v'$ にマージされるとき, $\forall x \in \sigma ' _{v'}$ について $[v] \wedge \omega_x$ が充足可能となるような witness path $\pi_x$ が存在する. これは $\pi_x$ が $v$ から実行可能なことを表し, $\pi_x$ は $x$ が target 変数に影響を与えるパスであることから, $\sigma' _ {v}$ には $x$ が含まれる.
+
+- $\sigma ' _{v} \subseteq \sigma ' _{v'}$
+
+  (背理法) $x \notin \sigma ' _{v'}$ となるような $x \in \sigma ' _{v}$ が存在するとする. このとき $x$ の witness path を $\pi_x$, witness 式を $\omega_x$ とすると, $[v] \wedge \omega_x$ は充足可能だが, $[v'] \wedge \omega_x$ は充足不可能. これは $\pi_x$ が $v$ から実行可能で $v'$ から実行不可能であることを表すため, 補題1に反する.
+
+</div>
+</details>
+
+ <br/>
+
+### Step1: 記号実行木の生成
+
