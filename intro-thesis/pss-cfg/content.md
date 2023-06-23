@@ -4,11 +4,27 @@
 
 ## 概要
 
+- ターゲット変数を指定したプログラムの新しいグラフ表現の提案
 
+- 新しいグラフ
+
+  - Path-sensitive である
+
+  - ターゲット変数に対してスライスされている
+
+    - "Tree Sliceing" という手法でより効果的にスライシング
+
+- 実験と結果
+
+  - 元のプログラムと比較して, プログラムの大きさはそこまで大きくならない (平均して2倍程度)
+
+  - 従来の静的スライスしたプログラムと比較して, テストとプログラム検査の速度が向上した
 
 ## Introduction
 
 - C プログラムから新しいグラフを構築
+
+- オフラインに (その他の解析とは別に) グラフを構築し, テストやプログラム検査を行うことを想定
 
 - Path-Sensitively Sliced Control Flow Graph (PSS-CFG) の特徴
 
@@ -157,7 +173,7 @@ Witness path と補間式はノードをマージするときに必要
 
 <br/>
 
-[**Example**](slides/pss-cfg-1.pdf)
+[**Example**](slides/pss-cfg-ex.pdf)
 
 <br/>
 
@@ -178,12 +194,61 @@ Target 変数の最終的な値が変わらないように記号実行木をス�
 
   <img src="images/image07.png" class="img-45" />
 
-3. 分岐の "then", "else" 節両方に target 変数に影響を与える文がない かつ
+3. Tree Slicing
+
+   分岐の "then", "else" 節両方に target 変数に影響を与える文がない かつ
   
    分岐の最終地点でノードがマージされているとき, 分岐全体を削除
 
    <img src="images/image08.png" class="img-55" />
 
+[**Example**](slides/pss-cfg-ex-slicing.pdf)
+
+
+### PSS-CFG
+
+<img src="images/image19.png" class="img-55" />
+
+- 2つのアルゴリズムによって元のコードを以下のように変換できる
+
+```c=
+bool flag, c, d;
+int x, y, z;
+if (c) flag = 1;
+else flag = 0;
+x = 2;
+if (d) y = 4;
+else y = 5;
+if (flag) z = y + x;
+else z = x + 1;
+TARGET: {z}
+```
+
+```c=
+bool c, d;
+int x, y, z;
+if (c) {
+    x = 2;
+    if (d) y = 4;
+    else y = 5;
+    z = y + x;
+} else {
+    x = 2;
+    z = x + 1;
+}
+```
+
+- 純粋に path-sensitive に考えたときの実行パス : 8本
+  
+  PSS-CFG の実行パス : 3本
+
+- 従来の静的スライサーではできないこと
+
+  - $c = false$ のとき $d$ の値を考えないこと
+
+  - $flag$ の代入や分岐を sound に削除すること
+
+<br/>
 
 ## Algorithm
 
@@ -433,8 +498,14 @@ witness 式 $\ \omega_x$ : パス $\pi$ について変数とパスの条件を�
 
 依存変数と witness 式の組を考える
 
-抽象ドメイン : $\ \ \mathcal{D} \triangleq\{\perp\} \cup \mathcal{P}(Vars \times FOL)$
+- 抽象ドメイン : $\ \ \mathcal{D} \triangleq\{\perp\} \cup \mathcal{P}(Vars \times FOL)$
 
+- 抽象演算 : $\ \sqcup = \cup$, $\ \sqsubseteq = \subseteq$
+
+- $\widehat{pre}$ : $\mathsf{op}$ の事後状態から事前状態を求める関数
+
+  - 依存変数 : 上記の定義
+  - witness 式 : (事後状態の依存変数に対する witness 式) $\wedge$ ($\mathsf{op}$ の論理的制約)
 
 これ以降は依存変数と witness 式の組の集合を $\sigma$ で表す
 
