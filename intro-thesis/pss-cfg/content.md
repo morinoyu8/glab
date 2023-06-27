@@ -810,3 +810,120 @@ $$\sigma_v\ \triangleq\ \sigma_{v'}$$
 <br/>
 
 #### ループの扱い
+
+記号実行木が無限に構築されるのを防ぐ
+
+1. ループの header で loop invariant を計算
+2. ループ1周分のグラフを構築
+3. 状態が不動点に到達するまでループの header からアルゴリズムを再開
+
+[**Example**](slides/pss-cfg-loop.pdf)
+
+- この手法で実験的にループを通したほとんどの重要な情報を保持できる
+
+- ループに1つの header があることが前提
+
+<br/>
+
+## 実験・評価
+
+### 実装
+
+- 記号実行フレームワーク [TRACER](https://link.springer.com/chapter/10.1007/978-3-642-31424-7_61) 上に実装
+
+- ポインタ
+
+  - flow-insensitive なポインタ解析を使用してモデル化
+
+- 関数
+
+  - すべてインライン展開
+
+  - 外部の関数は副作用がなく任意の値を返すとしてモデル化
+
+### 実験概要
+
+- ベンチマーク
+
+  - [SV-COMP 2013](https://sv-comp.sosy-lab.org/2013/benchmarks.php) の ntdrivers-simplified カテゴリと tcas を使用
+
+  - プログラムの安全性からターゲット変数を選択
+
+- 比較対象
+
+  - [Frama-C](https://dl.acm.org/doi/10.1007/s00165-014-0326-7) : 定数伝播, 定数畳み込み, 抽象解釈などを使って実行不可能なパスを見つける, path-sensitive な静的スライサー
+
+    - 静的スライサー : 元々のプログラムに対してスライシングを行う
+
+    - PSS-CFG : 元々のプログラムをスライスした新しいプログラムを構築する
+
+```c=
+bool flag, c, d;
+int x, y, z;
+if (c) flag = 1;
+else flag = 0;
+x = 2;
+if (d) y = 4;
+else y = 5;
+if (flag) z = y + x;
+else z = x + 1;
+TARGET: {z}
+```
+
+```c=
+bool c, d;
+int x, y, z;
+if (c) {
+    x = 2;
+    if (d) y = 4;
+    else y = 5;
+    z = y + x;
+} else {
+    x = 2;
+    z = x + 1;
+}
+```
+
+### PSS-CFG の構築
+
+<img src="images/image20.png" class="img-80" />
+
+- (Blowup) 静的スライサーと比較したときのプログラム行数の倍率
+
+  - 2倍程度
+  - Path-sensitivity を導入したことによるコード行数の増加
+  - マージとスラシングによるコード行数の減少
+
+- (PSS Time) PSS-CFG の構築時間
+
+- (Rule Triggers) 変換ルールの適用回数
+
+- 一度 PSS-CFG を構築すれば, 同じ target 変数に関するテストや検証を何度も行うことができる
+
+### テスト
+
+[DART](https://dl.acm.org/doi/10.1145/1064978.1065036) というコンコリックテストの手法を使い, すべての実行可能なパスを通るまでの時間を計測
+
+- あるパスを通ったら分岐で否定を取り,　別のパスへ進む
+
+<img src="images/image21.png" class="img-45" />
+
+- どの検体でも PSS-CFG の方が早くテストを完了
+
+- コンコリックテスト中にソルバーが呼ばれる回数も PSS-CFG の方が数倍少ない
+
+### 検証
+
+[IMPACT](https://link.springer.com/chapter/10.1007/11817963_14), [ARMC](https://dl.acm.org/doi/10.1007/978-3-540-69611-7_16), [CPA-CHECKER](https://link.springer.com/chapter/10.1007/978-3-642-22110-1_16) の3つの検証器を用いて検証時間を比較
+
+  - 検証アプローチが異なるためこの3つの検証器を選択
+
+<img src="images/image22.png" class="img-100" />
+
+- どのアプローチも PSS-CFG の方が速く検証可能
+
+- タイムアウトは10分
+
+- CPA-CHECKER の効果が薄いのは他の2つよりも洗練されているため
+
+<br/>
