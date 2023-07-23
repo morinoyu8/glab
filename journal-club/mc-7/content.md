@@ -170,3 +170,15 @@ $\mathcal{A}$ の言語 : $\varepsilon + (a + b)^{*}a$
 $$ (q, a, l), (q, a, l') \in \Delta , \text{where}\ l \neq l'$$
 
 決定的 (deterministic) オートマトン : 上記の遷移が存在しない かつ 初期状態が一つ $|\mathcal{Q}^0| = 1$
+
+非決定的な regular オートマトンは受理言語を変えずに決定的オートマトンに変換できる
+
+<br/>
+
+非決定的オートマトン : $\mathcal{A} = (\Sigma, \mathcal{Q}, \Delta, \mathcal{Q}^0, F)$ は以下の決定的オートマトンに変換可能
+
+$$\mathcal{A}' = (\Sigma, \mathcal{P}(\mathcal{Q}), \Delta', \{\mathcal{Q}^0\}, F')$$
+
+- 遷移関係 $\Delta' \subseteq \mathcal{P}(\mathcal{Q}) \times \Sigma \times \mathcal{P}(\mathcal{Q})$
+
+  - $(\mathcal{Q}_1, a, \mathcal{Q}_2)$
