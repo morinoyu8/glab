@@ -401,5 +401,7 @@ $\mathcal{A}$ の**言語** (**language**) $\mathcal{L}(\mathcal{A}) \subseteq \
     </div>
     </details>
 
+$\mathcal{L}(\mathcal{A})$ : $(b^*a)^{\omega}$
+
 </div>
 </details>
