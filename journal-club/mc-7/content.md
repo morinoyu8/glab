@@ -344,3 +344,62 @@ $$\mathcal{A}' = (\Sigma, \mathcal{P}(\mathcal{Q}), \Delta', \{\mathcal{Q}^0\}, 
 
 
 ## 7.2 Automata on Infinite Words
+
+**無限**の文字列を扱える有限オートマトンを考える
+
+  - Reactive system などを扱いたい
+
+Büchi オートマトン : **無限**の文字列を扱える最も簡単な有限オートマトン
+
+Regular オートマトンと構成要素は同じ : $(\Sigma, \mathcal{Q}, \Delta, \mathcal{Q}^0, F)$
+
+ただし, 無限の文字列 $v \in \Sigma^{\omega}$ を扱える ($\omega$ は無限の繰り返しを表す)
+
+<br/>
+
+$inf(\rho)$ : 実行 $\rho$ で無限によく現れる状態 
+
+  - 状態 $\mathcal{Q}$ は有限, 実行 $\rho$ は無限なので $inf(\rho)$ は空集合ではない
+
+Büchi オートマトン $\mathcal{A}$ が実行 $\rho$ を**受理する** $\Leftrightarrow inf(\rho) \cap F \neq \emptyset$
+
+- 受理状態 $F$ のどれかが実行 $\rho$ で無限によく現れる
+
+$\mathcal{A}$ の**言語** (**language**) $\mathcal{L}(\mathcal{A}) \subseteq \Sigma^{\omega}$ : $\mathcal{A}$ によって受理されるすべての無限の文字列の集合 
+
+<br/>
+
+<details>
+<summary><dev style="color: var(--main-color)">Example</dev></summary>
+<div class="details-inner">
+
+<img src="images/image7-1-2.png" class="img-40" />
+
+受理状態 $q_1$ が無限によく現れるとき, その実行は受理される
+
+- $(ab)^{\omega}$ は受理される?
+
+    <details>
+    <summary>答え</summary>
+    <div class="details-inner">
+
+    Yes
+
+    </div>
+    </details>
+
+- $a^*b^{\omega}$ は受理される?
+
+    <details>
+    <summary>答え</summary>
+    <div class="details-inner">
+
+    No
+
+    受理状態 $q_1$ は有限回しか現れない
+
+    </div>
+    </details>
+
+</div>
+</details>
