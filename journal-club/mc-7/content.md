@@ -21,6 +21,30 @@
    - 受理言語が空: システムは LTL 式を満たす (満たしたくない性質の実行が存在しない)
    - 受理言語が空でない: システムは LTL 式を満たさない (満たしたくない性質の実行が存在する)
 
+### クリプキ構造 ・ LTL 式とオートマトンの関係
+
+#### クリプキ構造
+
+<img src="images/image7-0-8.png" class="img-60" />
+
+- クリプキ構造上の状態のラベルをそれに向かう辺のラベルに
+
+- システムの状態遷移から得られるラベルの列がオートマトンの受理言語
+
+  - $s_0s_1s_0s_1s_2s_0$ : $\{p,q\}\{p\}\{p,q\}\{p\}\{q\}\{p,q\}$
+
+#### LTL 式
+
+[**Slide**](slides/ltl-automaton.pdf)
+
+<img src="images/image7-0-7-3.png" class="img-70" />
+
+- オートマトンの状態はパスのある状態からの性質を表す
+
+- LTL 式のオートマトンが受理する言語はある LTL パスの状態のラベルの列
+
+  - $\{ p \}\{ p \}\{ q \}...$
+
 ### 考えること
 
 - オートマトンについて
@@ -402,6 +426,17 @@ $\mathcal{A}$ の**言語** (**language**) $\mathcal{L}(\mathcal{A}) \subseteq \
     </details>
 
 $\mathcal{L}(\mathcal{A})$ : $(b^*a)^{\omega}$
+
+ちなみに、このオートマトンはどんな LTL 式を変換したもの？
+
+<details>
+<summary>答え</summary>
+<div class="details-inner">
+
+$GF a$
+
+</div>
+</details>
 
 </div>
 </details>
