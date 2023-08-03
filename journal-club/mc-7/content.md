@@ -9,6 +9,7 @@
 - 7章 : オートマトンを用いた LTL 式の検査
 
   - システムも性質もオートマトンで表す
+  - automaton : 単数形, automata : 複数形
 
 ### オートマトンを用いた LTL 式検査の概要
 
@@ -51,7 +52,7 @@
 
   - [7.1 節](#71-finite-automata-on-finite-words) : 有限の文字列を扱える有限オートマトン
   - [7.2 節](#72-automata-on-infinite-words) : 無限の文字列を扱える有限オートマトン (Büchi オートマトン)
-  - 7.3 節 : 決定性・非決定性 Büchi オートマトン
+  - [7.3 節](#73-deterministic-versus-nonderterministic-büchi-automata) : 決定性・非決定性 Büchi オートマトン
   - 7.6 節 : 一般的な Büchi オートマトン について
 
 - オートマトンの合成について
@@ -427,6 +428,8 @@ $\mathcal{A}$ の**言語** (**language**) $\mathcal{L}(\mathcal{A}) \subseteq \
 
 $\mathcal{L}(\mathcal{A})$ : $(b^*a)^{\omega}$
 
+<br/>
+
 ちなみに、このオートマトンはどんな LTL 式を変換したもの？
 
 <details>
@@ -437,6 +440,122 @@ $GF a$
 
 </div>
 </details>
+
+</div>
+</details>
+
+## 7.3 Deterministic versus Nonderterministic Büchi Automata
+
+表現力 :
+
+有限文字列を扱うオートマトン : (決定性) = (非決定性)
+
+Büchi オートマトン : (決定性) < (非決定性)
+
+- **非決定性** Büchi オートマトンには等価な (同じ言語を受理する) **決定性** Büchi オートマトンに置き換えられないものが存在する
+
+<img src="images/image7-3-1.png" class="img-30" />
+
+<u>**Lemma 7.1**</u>
+
+<br/>
+
+<u>**Theorem 7.2**</u>
+
+表現力 : (決定性 Büchi オートマトン) < (非決定性 Büchi オートマトン)
+
+つまり, 等価な決定性 Büchi オートマトンがない非決定性 Büchi オートマトンが存在する
+
+<br/>
+
+<details>
+<summary><dev style="color: var(--main-color)">Proof</dev></summary>
+<div class="details-inner">
+
+<img src="images/image7-3-1.png" class="img-30" />
+
+上の非決定性 Büchi オートマトン $\mathcal{B}$ を考える.
+
+受理言語は? (LTL 式?)
+
+<details>
+<summary>答え</summary>
+<div class="details-inner">
+
+$(a + b)^*b^{\omega}$
+
+(LTL 式: $FG b$)
+
+</div>
+</details>
+
+つまり, $a$ は有限回しか現れない. 
+
+この言語を受理する決定性 Büchi オートマトンが存在しないことを背理法で示す.
+
+この言語を受理する決定性 Büchi オートマトン $\mathcal{C}$ が存在すると仮定する ($\mathcal{L}(\mathcal{C}) = \mathcal{L}(\mathcal{B})$). 
+
+$\mathcal{C}$ は $\sigma b^{\omega}$ ($\sigma$ は有限の文字列) を受理する.
+
+<u>**ポイント**</u>
+
+$\mathcal{C}$ は決定的なのである文字列に対する実行は一意に定まる.
+
+- $b^{\omega} \in \mathcal{L}(\mathcal{C})$ より, $b^{n_1}$ の次に到達する受理状態 $q_1 \in F_{\mathcal{C}}$ が存在する. 
+
+  (イメージ : $b^{\omega} = b^{n_1}b^{\omega}$)
+
+  <img src="images/image7-3-2.png" class="img-50" />
+
+
+- $b^{n_1}ab^{\omega} \in \mathcal{L}(\mathcal{C})$ より, $b^{n_1}ab^{n_2}$ の次に到達する受理状態 $q_2 \in F_{\mathcal{C}}$ が存在する. 
+
+  (イメージ : $b^{n_1}ab^{\omega} = b^{n_1}ab^{n_2}b^{\omega}$)
+
+  <img src="images/image7-3-3.png" class="img-70" />
+
+- $b^{n_1}ab^{n_2}ab^{\omega} \in \mathcal{L}(\mathcal{C})$ より, $b^{n_1}ab^{n_2}ab^{n_3}$ の次に到達する受理状態 $q_3 \in F_{\mathcal{C}}$ が存在する. 
+
+  (イメージ : $b^{n_1}ab^{n_2}ab^{\omega} = b^{n_1}ab^{n_2}ab^{n_3}b^{\omega}$)
+
+  <img src="images/image7-3-4.png" class="img-100" />
+
+- すべての $k \geq 1$ について, $b^{n_1}ab^{n_2} \cdots ab^{n_k}$ の後に到達する, 受理状態 $q_k \in F_{\mathcal{C}}$ が存在する.
+
+$\dots q_1 \dots q_2 \dots q_k$ の実行に対して, $F_{\mathcal{C}}$ は有限だから, $q_i = q_j$ となる $i, j (i < j)$ が存在する.
+
+<img src="images/image7-3-5.png" class="img-80" />
+
+これは $\mathcal{C}$ が無限の $a$ を受理することを表す.
+
+この文字列は $\mathcal{B}$ では受理されないため, $\mathcal{L}(\mathcal{C}) = \mathcal{L}(\mathcal{B})$ に矛盾する.
+
+(有限個の $a$ を受理する決定性 Büchi オートマトンを構築しようとしても, 無限個の $a$ を受理してしまう)
+
+</div>
+</details>
+
+<br/>
+
+<u>**Lemma 7.3**</u>
+
+決定性 Büchi オートマトンが受理する言語の集合は補に対して閉じていない
+
+<br/>
+
+<details>
+<summary><dev style="color: var(--main-color)">Proof</dev></summary>
+<div class="details-inner">
+
+以下の決定性 Büchi オートマトンを考える.
+
+<img src="images/image7-1-2.png" class="img-40" />
+
+このオートマトンは無限個の $a$ を含む文字列を受理する.
+
+補は有限個の $a$ を含む文字列を受理する.
+
+Theorem 7.2 より, 有限個の $a$ を含む文字列を受理する決定性 Büchi オートマトンは存在しない.
 
 </div>
 </details>
