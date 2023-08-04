@@ -246,11 +246,11 @@ $$\mathcal{A}' = (\Sigma, \mathcal{P}(\mathcal{Q}), \Delta', \{\mathcal{Q}^0\}, 
 
   - $(\mathcal{Q}_1, a, \mathcal{Q}_2) \in \Delta'$ if
 
-  $$Q_2 = \displaystyle \bigcup_{q \in Q_1} \{ q' \ | \ (q,a,q') \in \Delta \}$$
+  $$\mathcal{Q} _ 2 = \displaystyle \bigcup_{q \in \mathcal{Q} _ 1} \{ q' \ | \ (q,a,q') \in \Delta \}$$
 
   - $\mathcal{A'}$ は決定性なので, $\Delta'$ は関数 $\mathcal{P}(\mathcal{Q}) \times \Sigma \to \mathcal{P}(\mathcal{Q})$ で表される
 
-- 受理状態の集合 $F'$ : $\{ Q'\ |\ Q' \cap F \neq \emptyset \}$
+- 受理状態の集合 $F'$ : $\{ \mathcal{Q}'\ |\ \mathcal{Q}' \cap F \neq \emptyset \}$
 
 
 <br/>
@@ -559,3 +559,7 @@ Theorem 7.2 より, 有限個の $a$ を含む文字列を受理する決定性 
 
 </div>
 </details>
+
+<br/>
+
+非決定性 Büchi オートマトンが受理する言語の集合は補に対して閉じている
