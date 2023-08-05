@@ -59,7 +59,7 @@
 
   <img src="images/image7-0-2.png" class="img-100" />
 
-  - 7.4 節 : Büchi オートマトンの積
+  - [7.4 節](#74-intersection-of-büchi-automata) : Büchi オートマトンの積
 
 <br/>
 
@@ -563,3 +563,5 @@ Theorem 7.2 より, 有限個の $a$ を含む文字列を受理する決定性 
 <br/>
 
 非決定性 Büchi オートマトンが受理する言語の集合は補に対して閉じている
+
+## 7.4 Intersection of Büchi Automata
