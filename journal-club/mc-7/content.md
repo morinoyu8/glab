@@ -641,11 +641,11 @@ $\mathcal{B}_1 \cap \mathcal{B}_2 = (\Sigma, \mathcal{Q}, \Delta, \mathcal{Q}^0,
 
 について, $\mathcal{L}(\mathcal{B}_1) \cap \mathcal{L}(\mathcal{B}_2)$ を受理するオートマトン $\mathcal{B}_1 \cap \mathcal{B}_2$
 
-$$ \mathcal{L}(\mathcal{B}_1) \cap \mathcal{L}(\mathcal{B}_2) = \{ \Sigma, \mathcal{Q}_1 \times \mathcal{Q}_2 \times \{0, 1, 2\}, \Delta, \mathcal{Q}_1^0 \times \mathcal{Q}_2^0 \times \{ 0 \}, \mathcal{Q}_1 \times \mathcal{Q}_2 \times \{ 2 \} \} $$
+$$ \mathcal{B}_1 \cap \mathcal{B}_2 = \{ \Sigma, \mathcal{Q}_1 \times \mathcal{Q}_2 \times \{0, 1, 2\}, \Delta, \mathcal{Q}_1^0 \times \mathcal{Q}_2^0 \times \{ 0 \}, \mathcal{Q}_1 \times \mathcal{Q}_2 \times \{ 2 \} \} $$
 
 遷移関係 $\Delta$ について
 
-$((r_i, q_j, x), a, (r_m, q_n, y)) \in \Delta$
+$((r_i, q_j, x), a, (r_m, q_n, x')) \in \Delta$
 
 - それそれのオートマトンで $a$ をラベルに持つ遷移がある
   
@@ -654,15 +654,50 @@ $((r_i, q_j, x), a, (r_m, q_n, y)) \in \Delta$
 - カウンタ変数はそれぞれのオートマトンの受理状態を通過したら $+1$ する
 
   - $x = 0$ のとき
-    - $r_m \in F_1$ ならば $y = 1$
+    - $r_m \in F_1$ ならば $x' = 1$
   
   - $x = 1$ のとき
-    - $q_n \in F_2$ ならば $y = 2$
+    - $q_n \in F_2$ ならば $x' = 2$
 
   - $x = 2$ のとき
-    - $y = 0$
+    - $x' = 0$
 
 $(r, q, 2)$ の状態が無限にしばしば現れる
 
 → $\mathcal{B}_1$ と $\mathcal{B}_2$ の受理状態を無限にしばしば通過する
 
+<br/>
+
+<details>
+<summary><dev style="color: var(--main-color)"><a href="slides/intersection-example.pdf">Example</a></dev></summary>
+</details>
+
+<details>
+<summary><dev style="color: var(--main-color)">Example2</dev></summary>
+<div class="details-inner">
+
+<img src="images/image7-4-2.png" class="img-60" />
+
+これは $(ab)^{\omega}$ を受理する？
+
+<details>
+<summary>答え</summary>
+<div class="details-inner">
+
+Yes
+
+<img src="images/image7-4-2-10.png" class="img-60" />
+
+</div>
+</details>
+
+</div>
+</details>
+
+<br/>
+
+合成する一方のオートマトンの受理状態がすべての状態のとき, オートマトンはより簡単に合成できる
+
+$\mathcal{B}_1$ の受理状態が $F_1 = \mathcal{Q}_1$, $\mathcal{B}_2$ の受理状態が $F_2$ のとき
+
+$$ \mathcal{B}_1 \cap \mathcal{B}_2 = \{ \Sigma, \mathcal{Q}_1 \times \mathcal{Q}_2, \Delta, \mathcal{Q}_1^0 \times \mathcal{Q}_2^0, \mathcal{Q}_1 \times F_2 \}$$
