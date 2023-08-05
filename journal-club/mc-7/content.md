@@ -67,7 +67,7 @@
 
   <img src="images/image7-0-3.png" class="img-100" />
 
-  - 7.5 節 : オートマトンが空かどうかのチェック
+  - [7.5 節](#75-checking-emptiness) : オートマトンが空かどうかのチェック
 
 <br/>
 
@@ -701,3 +701,7 @@ Yes
 $\mathcal{B}_1$ の受理状態が $F_1 = \mathcal{Q}_1$, $\mathcal{B}_2$ の受理状態が $F_2$ のとき
 
 $$ \mathcal{B}_1 \cap \mathcal{B}_2 = \{ \Sigma, \mathcal{Q}_1 \times \mathcal{Q}_2, \Delta, \mathcal{Q}_1^0 \times \mathcal{Q}_2^0, \mathcal{Q}_1 \times F_2 \}$$
+
+## 7.5 Checking Emptiness
+
+<img src="images/image7-0-3.png" class="img-100" />
