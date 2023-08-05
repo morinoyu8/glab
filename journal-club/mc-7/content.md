@@ -565,3 +565,104 @@ Theorem 7.2 より, 有限個の $a$ を含む文字列を受理する決定性 
 非決定性 Büchi オートマトンが受理する言語の集合は補に対して閉じている
 
 ## 7.4 Intersection of Büchi Automata
+
+<img src="images/image7-0-2.png" class="img-100" />
+
+2つの Büchi オートマトンの積を考える
+
+- $\mathcal{L}(\mathcal{B}_1) \cap \mathcal{L}(\mathcal{B}_2)$ を受理するオートマトンを構築したい
+
+まず単純にそれぞれのオートマトンの状態の組で考えてみる
+
+→ **うまくいかない！**
+
+<br/>
+
+<details>
+<summary><dev style="color: var(--main-color)">Example</dev></summary>
+<div class="details-inner">
+
+<img src="images/image7-4-1.png" class="img-80" />
+
+$\mathcal{B}_1 = (\Sigma, \{ r_1, r_2\}, \Delta_1, \{ r_1 \}, \{ r_1 \})$
+
+$\mathcal{B}_2 = (\Sigma, \{ q_1, q_2\}, \Delta_2, \{ q_1 \}, \{ q_1 \})$
+
+<br/>
+
+単純に考えると...
+
+$\mathcal{B}_1 \cap \mathcal{B}_2 = (\Sigma, \mathcal{Q}, \Delta, \mathcal{Q}^0, F)$
+
+- $\mathcal{Q} = \mathcal{Q}_1 \times \mathcal{Q}_2 = \{ (r_1, q_1), (r_1, q_2), (r_2, q_1), (r_2, q_2) \}$
+
+- $\mathcal{Q}^0 = \mathcal{Q}_1^0 \times \mathcal{Q}_2^0 = \{ (r_1, q_1) \}$
+
+- $F = F_1 \times F_2 = \{ (r_1, q_1) \}$
+
+- $\Delta = \{ ((q_i, r_j), a, (q_m, r_n))\ |\ (q_i, a, q_m) \in \Delta_1 \land (r_j, a, r_n) \in \Delta_2 \}$
+| | $a$ | $b$ |
+|:---:|:---:|:---:|
+| $(r_1, q_1)$ | $(r_1, q_2)$ | $(r_2, q_1)$ |
+| $(r_1, q_2)$ | $(r_1, q_2)$ | $(r_2, q_1)$ |
+| $(r_2, q_1)$ | $(r_1, q_2)$ | $(r_2, q_1)$ |
+| $(r_2, q_2)$ | $(r_1, q_2)$ | $(r_2, q_1)$ |
+
+元々の Büchi オートマトン
+
+<img src="images/image7-4-1.png" class="img-80" />
+
+どちらのオートマトンも $(ab)^{\omega}$ を受理する
+
+<img src="images/image7-4-1-2.png" class="img-50" />
+
+合成後のオートマトンは $(ab)^{\omega}$ を受理しない
+
+→ 元々の 2つのオートマトンで受理していた文字列を受理しなくなった！
+
+</div>
+</details>
+
+単純に $F = F_1 \times F_2$ とすると, $F_1$ と $F_2$ が **同時に** 無限にしばしば現れなければ受理されない
+
+- $F_1$ と $F_2$ が別々に無限にしばしば現れる場合も考えたい
+
+  - カウンタを使う
+
+<br/>
+
+#### 2つの Büchi オートマトンの積
+
+2つのオートマトン 
+
+- $\mathcal{B}_1 = (\Sigma, \mathcal{Q}_1, \Delta_1, \mathcal{Q}_1^0, F_1)$
+
+- $\mathcal{B}_2 = (\Sigma, \mathcal{Q}_2, \Delta_2, \mathcal{Q}_2^0, F_2)$ 
+
+について, $\mathcal{L}(\mathcal{B}_1) \cap \mathcal{L}(\mathcal{B}_2)$ を受理するオートマトン $\mathcal{B}_1 \cap \mathcal{B}_2$
+
+$$ \mathcal{L}(\mathcal{B}_1) \cap \mathcal{L}(\mathcal{B}_2) = \{ \Sigma, \mathcal{Q}_1 \times \mathcal{Q}_2 \times \{0, 1, 2\}, \Delta, \mathcal{Q}_1^0 \times \mathcal{Q}_2^0 \times \{ 0 \}, \mathcal{Q}_1 \times \mathcal{Q}_2 \times \{ 2 \} \} $$
+
+遷移関係 $\Delta$ について
+
+$((r_i, q_j, x), a, (r_m, q_n, y)) \in \Delta$
+
+- それそれのオートマトンで $a$ をラベルに持つ遷移がある
+  
+  - $(r_i, a, r_m) \in \Delta_1$ かつ $(q_j, a, q_n) \in \Delta_2$
+
+- カウンタ変数はそれぞれのオートマトンの受理状態を通過したら $+1$ する
+
+  - $x = 0$ のとき
+    - $r_m \in F_1$ ならば $y = 1$
+  
+  - $x = 1$ のとき
+    - $q_n \in F_2$ ならば $y = 2$
+
+  - $x = 2$ のとき
+    - $y = 0$
+
+$(r, q, 2)$ の状態が無限にしばしば現れる
+
+→ $\mathcal{B}_1$ と $\mathcal{B}_2$ の受理状態を無限にしばしば通過する
+
