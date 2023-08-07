@@ -61,7 +61,7 @@ function loadMain() {
 }
 
 function loadSrc(i) {
-    var headSrc = ['https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+    var headSrc = ['https://cdn.jsdelivr.net/npm/marked@6.0.0/marked.min.js',
                    'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML',
                    'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js',
                    'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/c.min.js',
