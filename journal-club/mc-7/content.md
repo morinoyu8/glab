@@ -32,7 +32,7 @@
 
 - システムの状態遷移から得られるラベルの列がオートマトンの受理言語
 
-  - $s_0s_1s_0s_1s_2s_0$ : $\{p,q\}\{p\}\{p,q\}\{p\}\{q\}\{p,q\}$
+  - $s_0s_1s_0s_1s_2s_0\dots$ : $\{p,q\}\{p\}\{p,q\}\{p\}\{q\}\{p,q\}\dots$
 
 #### LTL 式
 
@@ -75,7 +75,7 @@
 
   <img src="images/image7-0-4.png" class="img-100" />
 
-  - [7.7](#77-automata-and-kripki-structures) 節 : オートマトンとクリプキ構造
+  - [7.7 節](#77-automata-and-kripki-structures) : オートマトンとクリプキ構造
 
 <br/>
 
@@ -1116,3 +1116,93 @@ $((q, x), a, (q', x')) \in \Delta'$
 ## 7.7 Automata and Kripki Structures
 
 <img src="images/image7-0-4.png" class="img-100" />
+
+オートマトンを用いる利点: システムと性質を同じ形式で表せる
+
+#### クリプキ構造から Büchi オートマトンへの変換
+
+<img src="images/image7-0-8.png" class="img-60" />
+
+- クリプキ構造上の状態のラベルをそれに向かう辺のラベルに
+
+- システムの状態遷移から得られるラベルの列がオートマトンの受理言語
+
+  - $s_0s_1s_0s_1s_2s_0\dots$ : $\{p,q\}\{p\}\{p,q\}\{p\}\{q\}\{p,q\}\dots$
+
+<br/>
+
+クリプキ構造 $M = (S, S_0, R, AP, L)$ は以下のオートマトンに変換できる
+
+$$\mathcal{A}_{M} = (\Sigma, S \cup \{ \iota \}, \Delta, \{ \iota \}, S \cup \{ \iota \})$$
+
+- $\Sigma = \mathcal{P}(AP)$
+
+- 遷移関係 $\Delta$
+
+  - $(s, \alpha, s') \in \Delta,\ s, s' \in S$
+    - $(s, s') \in R$
+    - $\alpha = L(s')$
+
+  - $(\iota, \alpha, s) \in \Delta$
+    - $s \in S_0$
+    - $\alpha = L(s)$
+
+- 受理状態集合 $F$
+
+  - Fairness 制約がないとき
+    - すべての状態が受理状態
+
+  - Fairness 制約があるとき
+    - Fairness 制約をそのまま受理状態集合に
+   
+<details>
+<summary><dev style="color: var(--main-color)">Example</dev></summary>
+<div class="details-inner">
+
+<img src="images/image7-6-1.png" class="img-40" />
+
+$F = \{ \{ q_2, q_4\}, \{ q_5 \} \}$ のとき
+
+<br/>
+
+$(aab)^{\omega}$ は受理される？
+
+<details>
+<summary>答え</summary>
+<div class="details-inner">
+
+No
+
+$q_5$ は有限回しか通らない
+
+</div>
+</details>
+
+$(abb)^{\omega}$ は受理される？
+
+<details>
+<summary>答え</summary>
+<div class="details-inner">
+
+Yes
+
+$q_2, q_5$ は無限にしばしば通る
+
+</div>
+</details>
+
+$a^*b^{\omega}$ は受理される？
+
+<details>
+<summary>答え</summary>
+<div class="details-inner">
+
+問題がおかしい
+
+決定性 Büchi オートマトンの表現力では扱えない
+
+</div>
+</details>
+
+</div>
+</details>
