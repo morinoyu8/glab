@@ -53,7 +53,7 @@
   - [7.1 節](#71-finite-automata-on-finite-words) : 有限の文字列を扱える有限オートマトン
   - [7.2 節](#72-automata-on-infinite-words) : 無限の文字列を扱える有限オートマトン (Büchi オートマトン)
   - [7.3 節](#73-deterministic-versus-nonderterministic-büchi-automata) : 決定性・非決定性 Büchi オートマトン
-  - 7.6 節 : 一般的な Büchi オートマトン について
+  - [7.6 節](#76-generalized-büchi-automata) : 一般的な Büchi オートマトン について
 
 - オートマトンの合成について
 
@@ -1009,3 +1009,5 @@ $q'$ :
 
 </div>
 </details>
+
+## 7.6 Generalized Büchi Automata
