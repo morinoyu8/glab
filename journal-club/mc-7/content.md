@@ -705,3 +705,171 @@ $$ \mathcal{B}_1 \cap \mathcal{B}_2 = \{ \Sigma, \mathcal{Q}_1 \times \mathcal{Q
 ## 7.5 Checking Emptiness
 
 <img src="images/image7-0-3.png" class="img-100" />
+
+Büchi オートマトンの言語が空かどうかを調べる $\mathcal{L}(\mathcal{B}) = \emptyset$
+
+<br/>
+
+<u>**Lemma 7.4**</u>
+
+Büchi オートマトン $\mathcal{B} = (\Sigma, \mathcal{Q}, \Delta, \mathcal{Q}^0, F)$ について, 以下の条件は同値である
+
+- $\mathcal{L}(\mathcal{B}) \neq \emptyset$
+- $\mathcal{B}$ のグラフが 受理状態を含む nontrivial SCC $C$ を含む かつ $C$ が初期状態から到達可能
+- $\mathcal{B}$ のグラフに 初期状態から受理状態 $t \in F$ までのパスが存在する かつ $t$ から $t$ 自身に戻るパスが存在する
+
+<br/>
+
+2つ目の条件
+
+<details>
+<summary>Nontrivial SCC</summary>
+<div class="details-inner">
+
+SCC (strongly connected component) $C$ : $C$ 内のすべてのノードが他のすべてのノードから到達可能
+
+SCC が nontrivial :
+
+- 2つ以上のノードを持つ or
+  
+- 自分自身への辺が存在する
+
+<img src="images/image7-5-1.png" class="img-40" />
+
+</div>
+</details>
+
+<img src="images/image7-5-2-1.png" class="img-50" />
+
+3つ目の条件
+
+<img src="images/image7-5-2-2.png" class="img-50" />
+
+<br/>
+
+2つ目の条件を用いたアルゴリズム
+
+$\mathcal{B}$ のグラフが 受理状態を含む nontrivial SCC $C$ を含む かつ $C$ が初期状態から到達可能
+
+- Tarjan's DFS アルゴリズム
+
+  - SCC を見つけるアルゴリズム
+  - $O(|S| + |R|)$ でオートマトンの空を判定できる
+
+<br/>
+
+3つ目の条件を用いたアルゴリズム
+
+$\mathcal{B}$ のグラフに 初期状態から受理状態 $t \in F$ までのパスが存在する かつ $t$ から $t$ 自身に戻るパスが存在する
+
+- Double DFS アルゴリズム
+
+  - 最初に SCC を見つけるよりも効率的な場合が多い
+  - 特に on-the-fly モデル検査で効果的
+    - システムのオートマトンの構築途中で intersection を計算
+
+### 7.5.1 Checking Emptiness with Double DFS
+
+2つの DFS を使って到達可能な受理状態を見つけ, それ自身に戻るパスがあるかどうか判定する
+
+- DFS 1: 初期状態から始めて, 到達可能な受理状態を見つける
+  
+- DFS 2: DFS 1 で見つけた受理状態から始めて, それ自身に戻るサイクルを見つける
+
+DFS 2 は DFS 1 の途中から始める
+
+条件を満たす受理状態のサイクルを見つけたら終わり
+
+<br/>
+
+<u>**アルゴリズム**</u>
+
+- 初期状態から DFS1 を始める
+
+    ```python=
+    def emptiness():
+        for q0 in Q0:
+            dfs1(q0)
+        terminate(false)
+    ```
+
+- DFS 1
+
+  - 探索済み : hashed
+  - 受理状態から出るノードがすべて探索済みのとき DFS2 を始める
+  
+  ```python=
+  def dfs1(q):
+      hash(q)
+      for q_suc in successors(q):
+          if not hashed(q_suc):
+              dfs1(q_suc)
+
+      if accept(q):
+          dfs2(q)
+  ```
+
+- DFS 2
+
+  - 探索済み : flagged 
+  - 探索ノード $q\_suc$ が DFS 1 のスタック上にある
+    - DFS 1 より, 初期状態 -> $q\_suc$ -> $q\_a$ (DFS 2 を始めた受理状態) のパスが存在
+    - DFS 2 より, $q\_a$ -> $q\_suc$ のパスが存在
+    - よって $q\_a$ を含むサイクルが存在
+
+```python=
+def dfs2(q):
+    flag(q)
+    for q_suc in successors(q):
+        if on_dfs1_stack(q_suc):
+            terminate(true)
+
+        if not flagged(q_suc):
+            dfs2(q_suc)
+```
+
+[**Example**](slides/double-dfs-example.pdf)
+
+<br/>
+
+<details>
+<summary>コメント</summary>
+<div class="details-inner">
+
+DFS 1 で受理状態に到達したら DFS 2 を始めていいのでは？
+
+```python=
+def dfs1(q):
+    hash(q)
+    if accept(q):
+        dfs2(q)
+
+    for q_suc in successors(q):
+        if not hashed(q_suc):
+            dfs1(q_suc)
+```
+
+答えは No
+
+DFS 2 の flag はアルゴリズム中引き継がれる
+
+<img src="images/image7-5-4.png" class="img-60" />
+
+DFS 1: $q_1, q_2$
+
+上のアルゴリズムで $q_2$ から DFS 2 をスタート
+
+$q_2, q_3, q_4, q_5$ の flag が立つ
+
+DFS 1 の stack 上に $q_3, q_4, q_5$ はないので $q_2$ を含むサイクルはなし
+
+<img src="images/image7-5-4-2.png" class="img-60" />
+
+DFS 1 を進めて, 次に $q_5$ から DFS 2 がスタートするが, $q_5$ からのすべてのノードは flagged
+
+本来このオートマトンの受理言語は空ではないが空と判定
+
+</div>
+</details>
+
+<br/>
