@@ -872,4 +872,140 @@ DFS 1 を進めて, 次に $q_5$ から DFS 2 がスタートするが, $q_5$ �
 </div>
 </details>
 
+### 7.5.2 Correctness of the Double DFS Algorithm
+
+Double DFS アルゴリズムが正しいことを証明する
+
 <br/>
+
+<u>**Lemma 7.7**</u>
+
+$q$ をどのサイクルにも含まれない状態とする
+
+$q$ からバックトラックするのは, $q$ から到達可能な状態すべてを探索し, バックトラックしてきた後である
+
+<br/>
+
+<u>**Theorem 7.8**</u>
+
+$\mathcal{L}(\mathcal{B})$ が空でない
+
+$\ \ \Longleftrightarrow$ Double DFS アルゴリズムは $\mathcal{B}$ の空に対する反例を出す
+
+<br/>
+
+<details>
+<summary><dev style="color: var(--main-color)">Proof</dev></summary>
+<div class="details-inner">
+
+( $\Longleftarrow$ ) : 
+
+空に対する反例があるので明らか.
+
+<br/>
+
+( $\Longrightarrow$ ) : 
+
+アルゴリズムが空と判定したとき, $\mathcal{L}(\mathcal{B})$ は本当に空？
+
+以下の状況を考える.
+
+- $q$ から DFS 2 を始める.
+
+- $q$ から DFS 1 のスタック上にある状態 $p$ へのパスが存在する.
+
+<img src="images/image7-5-5-1.png" class="img-50" />
+
+このとき, 以下の2つの状況が考えられる.
+
+1. $q$ から $p$ へのパスで unflagged なノードのみで構成されるパスが存在する
+
+    - このとき DFS 2 は $q$ を含むサイクルを見つけることができる
+
+<img src="images/image7-5-5-2.png" class="img-50" />
+
+2. $q$ から $p$ へのすべてのパス上に flagged なノードが存在する
+
+    - このとき DFS 2 は $q$ を含むサイクルを見つけられない
+
+<img src="images/image7-5-5-3.png" class="img-50" />
+
+
+この 2 の状況がないことを背理法で証明する.
+
+<details>
+<summary><dev style="color: var(--main-color)">Proof</dev></summary>
+<div class="details-inner">
+
+状態を以下のように仮定する.
+
+$q$ : 
+
+- DFS 2 の起点となる受理状態
+- $q$ を含むサイクルが存在する
+- アルゴリズムがサイクルの発見に失敗するような **最初の** 状態
+
+$r$ : 
+
+- $q$ を含むサイクル上にある
+- $q$ から到達する最初の flagged な状態
+
+$q'$ :
+
+- $r$ を flagged にした DFS 2 の起点となる受理状態
+
+この仮定から $q'$ を起点とする DFS 2 は $q$ を起点とする DFS 2 の前に実行される.
+
+<img src="images/image7-5-5-4.png" class="img-100" />
+
+このとき, 以下の2つの状況が考えられる
+
+1. $q'$ が $q$ から到達可能なとき
+
+   $q' \to \dots \to r \to \dots \to q \to \dots \to q'$ となるサイクルが存在.
+
+   <img src="images/image7-5-5-5.png" class="img-70" />
+
+    アルゴリズムは終了していないので, $q'$ から始まる DFS 2 はこのサイクルの発見に失敗した.
+
+    これは, $q$ がサイクルの発見に失敗する最初の状態という仮定に矛盾.
+
+<br/>
+
+2. $q'$ が $q$ から到達不可能なとき
+
+    - $q'$ がサイクルに含まれるとき
+  
+      $q$ がサイクルの発見に失敗する最初の状態という仮定に矛盾.
+
+    - $q'$ がサイクルに含まれないとき
+  
+      $q' \to \dots \to r \to \dots \to q$ というパスが存在.
+
+      <img src="images/image7-5-5-6.png" class="img-55" />
+
+      $q'$ から $q$ に到達可能. 
+      
+      Lemma 7.7 より, $q$ を起点とする DFS 2 が $q'$ を起点とする DFS 2 の前に実行. 
+
+
+      <details>
+      <summary>Lemma 7.7</summary>
+      <div class="details-inner">
+
+      $q$ をどのサイクルにも含まれない状態とする
+
+      $q$ からバックトラックするのは, $q$ から到達可能な状態すべてを探索し, バックトラックしてきた後である
+
+      </div>
+      </details>
+      
+      これは $q'$ を起点とする DFS 2 は $q$ を起点とする DFS 2 の前に実行される という仮定に矛盾.
+
+</div>
+</details>
+
+よってこの 2 の状況はないので, 受理状態を含むサイクルが存在する ($\mathcal{L}(\mathcal{B}) \neq \emptyset$) ならば アルゴリズムは必ずそのサイクル (空に対する反例) を見つけることができる
+
+</div>
+</details>
