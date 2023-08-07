@@ -1031,6 +1031,58 @@ Generalized Büchi オートマトン
 
 - クリプキ構造の複数の fairness 制約と generalized Büchi オートマトンの受理状態集合は一致する
 
+<details>
+<summary><dev style="color: var(--main-color)">Example</dev></summary>
+<div class="details-inner">
+
+<img src="images/image7-6-1.png" class="img-40" />
+
+$F = \{ \{ q_2, q_4\}, \{ q_5 \} \}$ のとき
+
+<br/>
+
+$(aab)^{\omega}$ は受理される？
+
+<details>
+<summary>答え</summary>
+<div class="details-inner">
+
+No
+
+$q_5$ は有限回しか通らない
+
+</div>
+</details>
+
+$(abb)^{\omega}$ は受理される？
+
+<details>
+<summary>答え</summary>
+<div class="details-inner">
+
+Yes
+
+$q_2, q_5$ は無限にしばしば通る
+
+</div>
+</details>
+
+$a^*b^{\omega}$ は受理される？
+
+<details>
+<summary>答え</summary>
+<div class="details-inner">
+
+問題がおかしい
+
+決定性 Büchi オートマトンの表現力では扱えない
+
+</div>
+</details>
+
+</div>
+</details>
+
 #### Generalized Büchi オートマトン から Büchi オートマトンへの変換
 
 Generalized Büchi オートマトン 
