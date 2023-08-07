@@ -1010,6 +1010,30 @@ $q'$ :
 </div>
 </details>
 
+<br/>
+
+<details>
+<summary>☕️ break</summary>
+<div class="details-inner">
+
+箱根に行ってきた♨️
+
+[期待していたもの](https://www.tabikobo.com/tabi-pocket/japan/kanagawa/article53060.html)
+
+<details>
+<summary>実際に見たもの</summary>
+<div class="details-inner">
+
+<img src="images/break.jpg" class="img-60" />
+
+雨が降っているというレベルではなく雲の中にいる
+
+</div>
+</details>
+
+</div>
+</details>
+
 ## 7.6 Generalized Büchi Automata
 
 Generalized Büchi オートマトン
