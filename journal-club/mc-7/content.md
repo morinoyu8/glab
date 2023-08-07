@@ -1011,3 +1011,52 @@ $q'$ :
 </details>
 
 ## 7.6 Generalized Büchi Automata
+
+Generalized Büchi オートマトン
+
+- 複数の受理状態の集合を持つ
+
+  - $F \subseteq \mathcal{P}(\mathcal{Q})$
+
+    $F = \{ P_1, \dots, P_k \},\ P_i \subseteq Q$ 
+
+- すべての $P_i \in F$ について, $inf(\rho) \cap P_i \neq \emptyset$ のとき実行 $\rho$ は受理される
+
+  - $F$ の各要素のうちどれか一つは無限にしばしば通る
+  - $F$ が空集合のとき $\Sigma^{\omega}$ のすべてを受理する
+
+- Non-generalized Büchi オートマトン と受理できる言語は同じ
+
+- LTL 式から generalized Büchi オートマトンに変換する方法を示す (7.9節)
+
+- クリプキ構造の複数の fairness 制約と generalized Büchi オートマトンの受理状態集合は一致する
+
+#### Generalized Büchi オートマトン から Büchi オートマトンへの変換
+
+Generalized Büchi オートマトン 
+
+$\mathcal{B} = (\Sigma, \mathcal{Q}, \Delta, \mathcal{Q}^0, F)$
+
+$F = \{ P_1, \dots, P_k \}$
+
+は以下のように変換できる
+
+$$\mathcal{B}' = (\Sigma, \mathcal{Q} \times \{ 0, \dots, k \}, \Delta', \mathcal{Q}^0 \times \{ 0 \}, \mathcal{Q} \times \{k\})$$
+
+- 直感的には, 状態 $(q, i)$ に到達したとき, $P_1, \dots, P_i$ の状態に到達していることを表す
+
+遷移関係 $\Delta'$ について
+
+$((q, x), a, (q', x')) \in \Delta'$
+
+- $(q, a, q') \in \Delta$
+
+- カウンタ変数
+
+  - $q' \in P_{i + 1}, x = i$ のとき
+    - $x' = i + 1$
+  
+  - $x = k$ のとき
+    - $x' = 0$
+
+この変換はオートマトンのサイズを $k + 1$ 倍する
