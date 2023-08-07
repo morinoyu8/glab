@@ -75,7 +75,7 @@
 
   <img src="images/image7-0-4.png" class="img-100" />
 
-  - 7.7 節 : オートマトンとクリプキ構造
+  - [7.7](#77-automata-and-kripki-structures) 節 : オートマトンとクリプキ構造
 
 <br/>
 
@@ -1112,3 +1112,7 @@ $((q, x), a, (q', x')) \in \Delta'$
     - $x' = 0$
 
 この変換はオートマトンのサイズを $k + 1$ 倍する
+
+## 7.7 Automata and Kripki Structures
+
+<img src="images/image7-0-4.png" class="img-100" />
