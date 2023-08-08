@@ -458,6 +458,41 @@ Büchi オートマトン : (決定性) < (非決定性)
 
 <u>**Lemma 7.1**</u>
 
+$\mathcal{B}$ を決定的 Büchi オートマトンとする.
+
+すべての文字列 $v \in \Sigma^{\omega}$ について
+
+$v$ が $\mathcal{B}$ の言語
+
+$\ \ \Longleftrightarrow$ $\mathcal{B}$ が受理状態に到達するような $v$ の有限の prefix が無限に多く存在する
+
+<br/>
+
+<details>
+<summary><dev style="color: var(--main-color)">Proof</dev></summary>
+<div class="details-inner">
+
+($\Longleftarrow$) :
+
+$v$ の prefix によって少なくとも一つ無限回到達する受理状態 $q \in F$ が存在する ($F$ は有限).
+
+決定性から, $v', v''$ ($|v'| < |v''|$) を $v$ の有限の prefix としたとき, $v''$ のパスは $v'$ のパスを伸ばしたもの
+
+<img src="images/image7-3-0.png" class="img-50" />
+
+Hence, the unique path that agrees with all the finite paths for prefixes of $v$ that reach $q$ is accepting.
+
+<br/>
+
+($\Longrightarrow$) :
+
+$v$ が $\mathcal{B}$ の言語のとき, $q \in F$ に無限回到達するような実行が存在する
+
+$q$ が現れるたびに $v$ の有限の prefix が取れる
+
+</div>
+</details>
+
 <br/>
 
 <u>**Theorem 7.2**</u>
