@@ -27,6 +27,11 @@ $("#header").load(urlHeader + "/templete/header.html",
                 setHref('lt');
             }
         );
+        $(".memo").load(urlHeader + "/templete/memo.html",
+            function() {
+                setHref('memo');
+            }
+        );
         $("#header-jc").attr("href", urlHeader + "/#jc");
         $("#header-it").attr("href", urlHeader + "/#it");
         $("#header-pr").attr("href", urlHeader + "/#pr");
