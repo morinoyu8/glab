@@ -16,3 +16,6 @@
   
 各 `syz-executor` プロセスは一つの入力 (一連のシステムコール) を実行する.
 
+## Syacall descriptions
+
+`syz-fuzzer` は [システムコールの記述](../syscall-descriptions) に基づいて, `syz-executor` が実行するプログラムを生成する.
