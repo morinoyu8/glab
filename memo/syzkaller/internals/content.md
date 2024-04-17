@@ -1,5 +1,7 @@
 # How syzkaller works
 
+https://github.com/google/syzkaller/blob/master/docs/internals.md
+
 ## Overview
 
 <img src="https://github.com/google/syzkaller/blob/master/docs/process_structure.png?raw=true" class="img-80" />
@@ -23,3 +25,26 @@
 ## Coverage
 
 syzkaller はカバレッジガイドファザーである. カバレッジ収集の詳細は[こちら](../coverage).
+
+## Crash Reports
+
+syzkaller はクラッシュが発生すると, その情報を `workdir/crashes` ディレクトリに保存する. 下みたいなフォルダ構成.
+
+```
+ - crashes/
+   - 6e512290efa36515a7a27e53623304d20d1c3e
+     - description
+     - log0
+     - report0
+     - log1
+     - report1
+     ...
+   - 77c578906abe311d06227b9dc3bffa4c52676f
+     - description
+     - log0
+     - report0
+     ...
+```
+
+- `logN` ファイル
+  - 生の syzkaller ログを含み, クラッシュ前に実行されたプログラムとカーネルコンソール出力を含む. これらのログは [クラッシュ位置と最小化](../reproducing-crashes/) のための `syz-repro` に与えたり, [手動でローカライズする]() ために `syz-execprog` ツールに供給したりする.

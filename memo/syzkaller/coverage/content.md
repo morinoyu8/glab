@@ -1,5 +1,9 @@
 # Coverage
 
+https://github.com/google/syzkaller/blob/master/docs/coverage.md
+
+<br/>
+
 syzkaller はカバレッジ収集に [sanitizer coverage](https://clang.llvm.org/docs/SanitizerCoverage.html#tracing-pcs) (clang?) と [KCOV](https://www.kernel.org/doc/html/latest/dev-tools/kcov.html) (Linux?) を使う.
 
 カバレッジはコンパイラが挿入した `coverage points` (基本ブロック or CFG エッジ) のトレースに基づく.

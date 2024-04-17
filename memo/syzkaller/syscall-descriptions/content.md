@@ -1,5 +1,9 @@
 # Syscall descriptions
 
+https://github.com/google/syzkaller/blob/master/docs/syscall_descriptions.md
+
+<br/>
+
 syzkaller はシステムコールインターフェースの記述を使って, プログラム (システムコールのシーケンス) を操作する.
 
 例:
