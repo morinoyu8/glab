@@ -6,17 +6,17 @@ https://github.com/google/syzkaller/blob/master/docs/internals.md
 
 <img src="https://github.com/google/syzkaller/blob/master/docs/process_structure.png?raw=true" class="img-80" />
 
-`syz-manager` は以下を担当する:
+- `syz-manager` は以下を担当する:
 
-- VM インスタンスの起動・再起動・監視
-- ファジングプロセス (生成・変異)
-- 永続的なコーパスとクラッシュの保存
+  - VM インスタンスの起動・再起動・監視
+  - ファジングプロセス (生成・変異)
+  - 永続的なコーパスとクラッシュの保存
 
-`syz-manager` は `syz-fuzzer` を生成する. `syz-fuzzer` は RPC を介して `syz-manager` と通信し、実行する必要があるプログラムを受け取り, 結果を返す.
+- `syz-manager` は `syz-fuzzer` を生成する. `syz-fuzzer` は RPC を介して `syz-manager` と通信し、実行する必要があるプログラムを受け取り, 結果を返す.
 
-`syz-fuzzer` はプログラム実行のため `syz-executor` プロセスを開始する.
+- `syz-fuzzer` はプログラム実行のため `syz-executor` プロセスを開始する.
   
-各 `syz-executor` プロセスは一つの入力 (一連のシステムコール) を実行する.
+- 各 `syz-executor` プロセスは一つの入力 (一連のシステムコール) を実行する.
 
 ## Syacall descriptions
 
@@ -47,4 +47,4 @@ syzkaller はクラッシュが発生すると, その情報を `workdir/crashes
 ```
 
 - `logN` ファイル
-  - 生の syzkaller ログを含み, クラッシュ前に実行されたプログラムとカーネルコンソール出力を含む. これらのログは [クラッシュ位置と最小化](../reproducing-crashes/) のための `syz-repro` に与えたり, [手動でローカライズする]() ために `syz-execprog` ツールに供給したりする.
+  - 生の syzkaller ログを含み, クラッシュ前に実行されたプログラムとカーネルコンソール出力を含む. これらのログは [クラッシュ位置と最小化](../reproducing-crashes/) のための `syz-repro` に与えたり, [手動でローカライズする](../executing-syzkaller-programs/) ために `syz-execprog` ツールに供給したりする.
