@@ -19,3 +19,7 @@
 ## Syacall descriptions
 
 `syz-fuzzer` は [システムコールの記述](../syscall-descriptions) に基づいて, `syz-executor` が実行するプログラムを生成する.
+
+## Coverage
+
+syzkaller はカバレッジガイドファザーである. カバレッジ収集の詳細は[こちら](../coverage).
