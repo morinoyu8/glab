@@ -8,6 +8,7 @@ https://github.com/google/syzkaller
 
 - [How syzkaller works](internals)
 
-## ソースコード解析
+## ソースコード解析 (読んだだけ)
 
 - [syz-manager](syz-manager)
+- [syz-fuzzer](syz-fuzzer)
