@@ -2,5 +2,9 @@
     {
         "id": ".memo-syzkaller",
         "link": "/memo/syzkaller"
+    },
+    {
+        "id": ".memo-uafl",
+        "link": "/memo/uafl"
     }
 ]
