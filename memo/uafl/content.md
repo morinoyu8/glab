@@ -97,3 +97,15 @@
 <br/>
 
 - $4 \to 7 \to 10 \to 14$ をカバーできるテストケースを生成するのは非常に困難
+<br/>
+
+### 3. Our Approach
+
+- UAFL : typestate プロパティに違反する脆弱性を検出することを目的とした typestate-guided ファザー
+- typastate 解析と typestate-guided ファジングの2つのフェーズで動作する
+
+#### Phase1: Typestate Analysis
+
+- UAFL は typestate プロパティに基づき, まず静的な typestate 解析を行い, プログラム内の操作シーケンスをとらえる
+- 例えば, UAFL は $malloc \to free \to use$ のパターンのすべての操作シーケンスを特定する
+- UAFL はポインタのエイリアス解析も行う ( $\mathtt{ptr1}$ と $\mathtt{ptr2}$ はエイリアスである可能性がある)
