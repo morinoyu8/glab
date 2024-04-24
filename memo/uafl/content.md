@@ -162,10 +162,25 @@
   - $\alpha \notin \mathcal{P}$: $\mathcal{P}$ によって受理されない
 
 
-### Typestate Analysis
+#### Typestate Analysis
 
 - オートマトンが受理する操作の集合は有効なトレース
 - 受理しない操作は typestate プロパティに違反する可能性がある
 - typestate 解析問題:
   - typestate プロパティ $\mathcal{P}$ が与えられたとき,
   - $\exists o \in \mathcal{U}(p): p[o] \notin \mathcal{P}$ となるパス $p$ が存在するかどうか
+
+<br/>
+
+### 3.2 Use-After-Free Detection Problem
+
+<img src="./images/figure3.png" class="img-60" />
+
+- UAF の typestate プロパティ (オートマトン)
+  - $\Sigma = \{malloc, free, use\}$
+  - メモリが確保されたときアクセスできる
+  - メモリが解放された後, use/free を行うとエラー状態となる
+- UAF の検出は図3の typestate プロパティに違反する操作シーケンスを実行するテストケースを発見すること
+<br/>
+
+- 図1の例では, $P$-path: $\langle 2-5, 6, 7, 8, 9, 10, 11, 12, 13, 14 \rangle$ は $ptr1$ のメモリに対する $\langle 4, 7, 10, 14 \rangle$ という操作シーケンスを含んでいて, typestate プロパティに違反する
