@@ -102,10 +102,70 @@
 ### 3. Our Approach
 
 - UAFL : typestate プロパティに違反する脆弱性を検出することを目的とした typestate-guided ファザー
-- typastate 解析と typestate-guided ファジングの2つのフェーズで動作する
+- typestate 解析と typestate-guided ファジングの2つのフェーズで動作する
 
 #### Phase1: Typestate Analysis
 
 - UAFL は typestate プロパティに基づき, まず静的な typestate 解析を行い, プログラム内の操作シーケンスをとらえる
 - 例えば, UAFL は $malloc \to free \to use$ のパターンのすべての操作シーケンスを特定する
 - UAFL はポインタのエイリアス解析も行う ( $\mathtt{ptr1}$ と $\mathtt{ptr2}$ はエイリアスである可能性がある)
+
+#### Phase2: Typestate-Guided Fuzzing
+
+- UAFL は段階的に操作シーケンスを実行するようなテストケースを生成する
+- まず操作シーケンスに基づいて計装を行う
+  - この操作シーケンスのテストケースを生成するようなフィードバックを提供するため
+- 図2(c) は UAFL のファジングプロセスを表す
+- UAFL が図2(b) のテストケースを生成し, すべての CFG エッジをカバーしたとする
+- 操作シーケンス ($4 \to 7 \to 10 \to 14$) を基に UAFL は操作シーケンスをカバーする新しいテストケースを生成できる
+  - [aaaseen] から [auaseen] を生成できる
+    - 新しい CFG エッジをカバーしないため, AFL では破棄される
+  - [auaseen] から [furseen] を生成できる
+
+<br/>
+
+## 3. Typestate Analysis
+
+- typestate プロパティと
+- 静的 typestate 解析によって UAF に違反する可能性のある操作シーケンスを特定する方法
+
+### 3.1 Typestate Properties
+
+- 簡単のため, 以下のプログラミング言語で考える
+
+<img src="./images/definition1.png" class="img-70" />
+
+- プログラム $P$ のパス $p$ :
+  - $P$ のエントリから始まるステートメントの有効なシーケンス
+- オブジェクトごとに複数の操作シーケンスを抽出することができる
+<br/>
+
+- $\operatorname{Definifion} 2$: 操作シーケンス
+  - $P$-path $p$ が与えられたとき, $\mathcal{U}(p)$ はこの実行中に作られたオブジェクトの集合
+  - $o \in \mathcal{U}(p)$ について, $p[o]$ は $p$ の実行中に $o$ に対して行われた操作シーケンスを表す
+
+- 例: $p = \langle a.malloc(), a.insert(), b.malloc(), b.free(), a.free() \rangle$
+  - $\mathcal{U}(p) = \{a, b\}$
+  - $p[a] = \langle a.malloc(), a.insert(), a.free() \rangle$
+
+<br/>
+
+- $\operatorname{Definifion} 3$: Typestate property $\mathcal{P}$
+  - 有限状態オートマトン $\mathcal{P} = (\Sigma, \mathcal{Q}, \delta, init, \mathcal{Q} \backslash \{err\})$
+    - $\Sigma$ : 操作のアルファベット
+    - $\mathcal{Q}$: 状態集合
+    - $\delta$: ((状態, 操作) $\to$ 次の状態) の map
+    - $init \in \mathcal{Q}$: 初期状態
+    - $err$: エラー状態 ($\sigma \in \Sigma, \delta(err, \sigma) = err$): $\mathcal{Q} \backslash \{err\}$ は受理状態
+- 操作シーケンス $\alpha = \langle \mathrm{op}_0, \dots, \mathrm{op}_n \rangle$ が与えられたとき
+  - $\alpha \in \mathcal{P}$: $\mathcal{P}$ によって受理される
+  - $\alpha \notin \mathcal{P}$: $\mathcal{P}$ によって受理されない
+
+
+### Typestate Analysis
+
+- オートマトンが受理する操作の集合は有効なトレース
+- 受理しない操作は typestate プロパティに違反する可能性がある
+- typestate 解析問題:
+  - typestate プロパティ $\mathcal{P}$ が与えられたとき,
+  - $\exists o \in \mathcal{U}(p): p[o] \notin \mathcal{P}$ となるパス $p$ が存在するかどうか
