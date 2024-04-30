@@ -493,3 +493,38 @@ $$ energy(i)^{\prime} = energy(i) * \left( 1+ \frac{ c\_OSe}{ t\_OSe} \right) $$
   - そこをファジングでカバーする
 - $T(s)$ は静的 typestate 解析の時間オーバーヘッド
   - すべてのプログラムで一時間以内で行うことができる
+
+<br/>
+
+### 5.3 Vulnerability Detection Results (RQ2)
+
+<img src="./images/table2.png" class="img-100" />
+
+- UAF 脆弱性の発見に要した時間でファザーを評価する
+- 表はある UAF 脆弱性を発見するのに要した時間
+- 最先端のファザーと比較して, UAFL は typestate 解析の時間を加えても時間オーバーヘッドは小さい
+
+<br/>
+
+- 浅い脆弱性はすべてのファザーがうまく動作する (readelf-2.31, lrzip)
+- 深い脆弱性については UAFL がはるかに優れた性能を発揮する (liblouis, GNU cflow, ImageMagick)
+
+<br/>
+
+- FairFuzz などが最高の性能を発揮するが, これらのファザーの目的は UAFL と似ている
+  - FairFuzz は稀な CFG エッジをカバーすることを目的とする
+  - Boolector のメモリフリー文は稀な CFG エッジの下にある
+- UAFL はより安定した性能を発揮し, ほとんどのプログラムにおいてより良い性能を発揮する
+
+<br/>
+
+#### Statistical Test
+
+<img src="./images/table3.png" class="img-100" />
+
+- ランダム性を緩和するために, 実験結果に対して統計的検定を行った
+- Vargha-Delaney ($\hat{A}_{12}$) 統計量は 効果量のノンパラメトリックな尺度であり, ランダム化アルゴリズムを測定するために使用される
+- UAFL と他のファザーの時間的使用量が与えられると. $\hat{A}_{12}$ 統計量は UAFL が他のファザーより優れた性能を発揮する確率を測定する
+- さらに, Mann-Whitney U を用いて, 性能向上の統計的有意性を測定する
+- 表3では $\hat{A}_{12}$ が有意であるとき太字で表している
+- ほとんど UAFL が他のファザーよりも有意に性能がいい
