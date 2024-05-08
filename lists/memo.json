@@ -8,6 +8,10 @@
         "link": "/memo/uafl"
     },
     {
+        "id": ".memo-htfuzz",
+        "link": "/memo/htfuzz"
+    },
+    {
         "id": ".memo-afl",
         "link": "/memo/afl"
     }
