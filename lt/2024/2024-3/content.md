@@ -12,7 +12,7 @@
 
 ## 注目馬
 
-### 1. ジョスティンミラノ
+### 1. ジャスティンミラノ
 
 <img src="./images/image1.jpeg" class="img-80" />
 
