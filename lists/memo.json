@@ -14,5 +14,9 @@
     {
         "id": ".memo-afl",
         "link": "/memo/afl"
+    },
+    {
+        "id": ".memo-remote-settings",
+        "link": "/memo/remote-settings"
     }
 ]
