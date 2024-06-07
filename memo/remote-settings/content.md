@@ -6,3 +6,4 @@
 
 - [VSCode の設定](vscode)
 - [rm コマンドをゴミ箱に移動するようにする](trash)
+- [シェルの設定いろいろ](shell-settings)
