@@ -106,9 +106,9 @@ const renderer = {
     },
 
     listitem(text) {
-        if (text.match(/\<p\>/)) {
-            return `<li>${text}</li>\n`;
-        }
+        // if (text.match(/\<p\>/)) {
+        //     return `<li>${text}</li>\n`;
+        // }
         text = text.replace(/\<li\>[^(\<p\>)](.*)\<\/li\>/g, '<li><p>$2</p></li>');
         return `<li><p>${text}</p></li>\n`;
     },
