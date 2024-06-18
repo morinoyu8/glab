@@ -1,5 +1,9 @@
 [
     {
+        "id": ".it-htfuzz",
+        "link": "/intro-thesis/htfuzz/htfuzz.pdf"
+    },
+    {
         "id": ".it-actor",
         "link": "/intro-thesis/actor/actor.pdf"
     },
