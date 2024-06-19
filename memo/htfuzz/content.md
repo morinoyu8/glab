@@ -341,3 +341,52 @@ $$
 $$
 \text { Is_Favored }= \begin{cases} True, & \text { IsLargest(PtrCount) } \vee \text { IsMinimum(Time * FileSize) } \\ False, & \text { otherwise }\end{cases}
 $$
+
+## 5. Evaluation
+
+- RQ1: HTFuzz は実世界の HT-Vuls を発見するのに有効か?
+- RQ2: HTFuzz は HT-Vuls に対するファジングの効率にどの程度貢献するか?
+- RQ3: HTFuzz は他のファザーと比較してどうか?
+
+### 5.1 Experiment Setup
+
+- [Klee らの提案](https://arxiv.org/abs/1808.09700) に従い実験を行った
+
+#### 5.1.1 Fuzzers to compare against
+
+<img src="./images/table1.png" class="img-60" />
+
+- UAF 脆弱性のために設計された UAFL, UAFuzz を含む, 11個のファザーと比較する
+- UAFL と UAFuzz は HT-Vuls をターゲットとしている
+  - これらはオープンソースではないので, それらのベンチマークで HTFuzz が同じ脆弱性を発見できるかで比較する
+- 他のファザーはオープンソースなのでデフォルトのパラメータで実行
+- AFL と Angora はベースラインファザー
+- MOPT は HTFuzzがその変異戦略を活用するので入れている
+- AFL-sensitive, TortoiseFuzz, Memlock はメモリ操作に注意を払う
+- PathAFL はシーケンス情報は意識するが, オーバーヘッドのため順序情報はあきらめる
+- Ankou は組み合わせ分岐差分をフィードバックとして使用し, 暗黙的にシーケンス情報を考慮する
+
+#### 5.1.2 Benchmark applications
+
+<img src="./images/table2.png" class="img-60" />
+
+- ベンチマークアプリケーションは UAFL と UAFuzz の公開データセット, TortoiseFuzz のリポジトリから収集
+- 収集したアプリは頻繁にテストされ, 活発に開発され, HT-Vuls (特に最近報告された脆弱性) を含み, 与えられた PoC ファイルで検証できるものでなければならない
+- 脆弱性が存在することを確認するために, 報告されたバグを与えられた PoC で再現できなかった 5つのプログラムと, コンパイルに失敗した3つのプログラムを除外
+- 14個のベンチマークデータセット
+
+#### 5.1.3 Performance Metrics
+
+- 評価の指標は以下の3つ
+  - 発見した HT-Vuls の数
+  - ヒープ操作シーケンス量
+  - コードカバレッジ
+- ヒープシーケンス量は afl-showmap を用いてシーケンスビットマップ内のサブシーケンスをカウント
+- カバレッジは gcov を用いて行カバレッジを求める
+- 異なるファザーの脆弱性発見を比較する場合, 統計評価のために Mann-Whitney U-test を用いる
+
+#### 5.1.4 Configuration Parameters
+
+- 各プログラムは72時間テストする
+- 各実験を8回実施する
+- すべての実験は Ubuntu LTS 16.04 で Intel Xeon CPU E5-2630 v3 プロセッサ (2.40GHZ, 32Core) と 32GB の RAM
