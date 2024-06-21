@@ -390,3 +390,34 @@ $$
 - 各プログラムは72時間テストする
 - 各実験を8回実施する
 - すべての実験は Ubuntu LTS 16.04 で Intel Xeon CPU E5-2630 v3 プロセッサ (2.40GHZ, 32Core) と 32GB の RAM
+
+<br/>
+
+### 5.2 RQ1. Finding Real-world Vulnerablities
+
+- HTFuzz は 74個の HT-Vuls を含む 92の脆弱性を発見
+- 37個が新しい脆弱性で, 32個が新しい HT-Vuls だった
+
+<img src="./images/table3.png" class="img-60" />
+
+- 表3は脆弱性の詳細
+
+<img src="./images/figure4.png" class="img-60" />
+
+- 図4は HTFuzz によって発見された HT-Vuls を時間経過で累積した図
+- ほぼ半数 (34/74) の脆弱性が10時間以内に発見されている
+
+<br/>
+
+<img src="./images/table4.png" class="img-100" />
+
+- 表4は 0day 脆弱性と 1day 脆弱性を含む HT-Vuls とその他のタイプの脆弱性について, HTFuzz と比較したベースラインファザーが発見した脆弱性の総数を表す
+- また, HTFuzz が見逃したが, 個々のファザーが発見した HT-Vuls の数
+  - AFL の 64-48-4 個というのは以下の意味
+    - AFL が合計 64個の脆弱性を発見
+    - そのうち 48個が HT-Vuls
+    - 4個の HT-Vuls は HTFuzz が見逃している
+- HTFuzz は総数や HT-Vuls を含む脆弱性の発見において, すべてのベースラインを凌駕している
+- 0day の行は各ファザーが発見した新しい CVE 脆弱性の数
+  - 3つ目が 0 だから HTFuzz はすべての CVE 脆弱性を発見している
+- HTFuzz は　HT-Vuls を多く発見してる
