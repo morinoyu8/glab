@@ -6,7 +6,7 @@ https://github.com/google/syzkaller
 
 ## ドキュメント
 
-- [How syzkaller works](internals)
+- [How syzkaller works](docs/internals)
 
 ## ソースコード解析 (読んだだけ)
 
