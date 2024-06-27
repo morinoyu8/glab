@@ -2,80 +2,58 @@
 
 https://github.com/google/syzkaller/blob/master/syz-fuzzer/proc.go
 
-(syz-executor の部分)
-
 <br/>
 
-#### newProc 関数
+#### startProc 関数
 
-```go=24
-func newProc(tool *FuzzerTool, execOpts *ipc.ExecOpts, pid int) (*Proc, error)
+```go=27
+func startProc(tool *FuzzerTool, pid int, config *ipc.Config)
 ```
+<br/>
 
-- `Proc` 構造体を作成 (コンストラクタ的な)
-
-```go=29
+```go=32
 proc := &Proc{
-    tool:     tool,
-    pid:      pid,
-    env:      env,
-    execOpts: execOpts,
+    tool: tool,
+    pid:  pid,
+    env:  env,
 }
-return proc, nil
+go proc.loop()
 ```
+
+- `Proc` 構造体を作成して `loop()` を実行
 
 <br/>
 
 #### loop 関数
 
-- ひとつのプロセスで繰り返しプログラムを実行するっぽい
-
-```go=38
+```go=40
 func (proc *Proc) loop()
 ```
 
-- たぶん次のプログラムが返ってくる
-
-```go=41
-req := proc.nextRequest()
-```
-
-- プログラムの実行?
-
-```go=62
-info, try := proc.execute(&opts, req.ID, req.ProgData)
-```
+- ひとつのプロセスで繰り返しプログラムを実行するっぽい
+  - 無限 `for` ループ
 
 <br/>
 
-#### execute 関数
-
-```go=89
-func (proc *Proc) execute(opts *ipc.ExecOpts, progID int64, progData []byte) (*ipc.ProgInfo, int)
+```go=42
+req, wait := proc.nextRequest()
 ```
 
-- たぶんこれで実行するはず
-
-```go=101
-output, info, hanged, err = proc.env.ExecProg(opts, progData)
-```
+- `proc.tool.requests` から実行するプログラムを持ってくるっぽい
+  - リクエストになければ色々してそう
 
 <br/>
 
-## pkg/ipc/ipc.go
-
-https://github.com/google/syzkaller/blob/master/pkg/ipc/ipc.go
-
-#### ExecProg 関数
-
-```go=253
-func (env *Env) ExecProg(opts *ExecOpts, progData []byte) (output []byte, info *ProgInfo, hanged bool, err0 error)
+```go=53
+for i := 1; i < int(req.Repeat) && res.Error == "" && req.Flags&flatrpc.RequestFlagIsBinary == 0; i++
 ```
 
-Exec starts executor binary to execute program stored in progData in exec encoding and returns information about the execution.
+- この `for` で指定された回数・エラーがなくなるまでプログラムを繰り返し実行してそう
 
-- プログラムの実行っぽい
+<br/>
 
-```go=276
-output, hanged, err0 = env.cmd.exec(opts, progData)
+```go=77
+err := flatrpc.Send(proc.tool.conn, msg)
 ```
+
+- これで実行結果を RPC を通して, `syz-manager` に送ってそう
