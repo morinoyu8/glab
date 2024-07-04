@@ -16,6 +16,10 @@
         "link": "/memo/afl"
     },
     {
+        "id": ".memo-ddrace",
+        "link": "/memo/ddrace"
+    },
+    {
         "id": ".memo-remote-settings",
         "link": "/memo/remote-settings"
     }
