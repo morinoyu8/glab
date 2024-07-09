@@ -1,5 +1,9 @@
 [
     {
+        "id": ".it-ddrace",
+        "link": "/intro-thesis/ddrace/ddrace.pdf"
+    },
+    {
         "id": ".it-htfuzz",
         "link": "/intro-thesis/htfuzz/htfuzz.pdf"
     },
