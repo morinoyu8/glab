@@ -1,0 +1,1 @@
+# When Threads Meet Interrupts: Effective Static Detection of Interrupt-Based Deadlocks in Linux [Usenix-security'24]
