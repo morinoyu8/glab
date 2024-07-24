@@ -515,3 +515,9 @@
 - DDRave は $setdelay$ を他のシステムコールと同様にパラメータを変異させる
 - つまり, $setdelay$ のための特定のテンプレートを設計し, テンプレートに従ってパラメータを変異させる
 - フィードバックに基づいて $setdelay$ の変異が好ましいかどうか判断する
+
+<br/>
+
+## 5. Evaluation
+
+- [実験以降の章](https://morinoyu8.github.io/glab/intro-thesis/ddrace/ddrace.pdf)
