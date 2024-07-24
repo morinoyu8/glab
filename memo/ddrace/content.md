@@ -1,4 +1,4 @@
-# DDRace: Finding Concurrency UAF Vulnerabilities in Linux Drivers with Directed Fuzzing [Usenix-security'23]
+# DDRace: Finding Concurrency UAF Vulnerabilities in Linux Drivers with Directed Fuzzing [SEC'23]
 
 ## Abstract
 
