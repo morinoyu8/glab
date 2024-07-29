@@ -318,7 +318,7 @@
 
 - LLM から Linux サブシステムの ISR 登録仕様を自動的に抽出できる
 
-<br/>
+<img src="./images/figure6.png" class="img-50" />
 
 - LLM に渡すクエリを構築するために, Archerfish は2つのケースに到達するまで, 各関数をその def-use chain に沿ってトレースする, 静的解析を実行する
 
@@ -343,3 +343,82 @@
 - 図3(a) の関数 ks_wlan_start_xmit() が ISR かスレッドかを判断するために, Archerfish はその def-use chain をトレースし, 構造体フィールド net_device_ops.ndo_start_xmit に到達する
 - この構造体のフィールドは NET_TY_SOFTIRQ softirq 登録のために一般的に使用するインターフェース
 - LLM はこれを softirq コンテキストで実行されることを正しく認識する
+
+<br/>
+
+### 5.2 Lockset and Interrupt-State Analysis
+
+- ロックセットと割り込み状態を計算するために flow- context-sensitive な typestate 解析を実行する
+- Archerfish はコールグラフの逆トポロジー順で各関数の順データフロー解析を実行し, 関数サマリを計算する
+- これらのサマリを呼び出し元がインライン化することで, 効率的な手続き間コンテキスト依存解析を実現する
+
+<br/>
+
+#### 5.2.1 Intra-Procedural Data-Flow Analysis
+
+<img src="./images/figure7.png" class="img-50" />
+
+- 関数の解析の開始時, 各ロック $o$ と $isr$ の状態は $\bot$ として初期化される
+- Archerfish は制御フローに沿って進み, 関数が戻るまで各命令を順次解析する
+- 各命令の状態は, その前の命令の状態のマージとして初期化され, 図7の抽象演算が使用される
+- 保守的に抽象状態をマージする
+
+<br/>
+
+#### 5.2.2 Function Summary Construction
+
+<img src="./images/figure8.png" class="img-45" />
+
+- 図8はデータフロー解析によって構築された3つの機能サマリの定義
+
+1. Preemption Unit Summery ($\mathbb{M}_1$)
+   
+   - このサマリは割り込み先取りの unit を形成する
+   - item はロックオブジェクトとロック文 ($o$, $s$) で示されるクリティカルセクションを表す
+   - item は, このクリティカルセクションを先取りする可能性のある ISR のセットを表す, 保守的な割り込みステートの集合を保持する
+     - そのために各 ISR の状態を記録する
+
+2. Lock Acquisition Summary ($\mathbb{M}_2$)
+
+   - このサマリは関数内部でのロック取得内容を表す
+   - item はロックオブジェクトロックステートメント ($o$, $s$) で表される
+   - $\mathbb{M}_1$ と違い, $\mathbb{M}_2$ は, このロックの取得前に Release されていなければならないロックの集合が記録される
+
+3. Return State Summary ($\mathbb{M}_3$)
+
+   - このサマリは関数終了時のロックセットと割り込み状態をキャッシュし, 呼び出し元関数でインライン化することで, 呼び出し元で typestate を更新することができる
+
+<br/>
+
+##### Summary Construction
+
+<img src="./images/algorithm1.png" class="img-50" />
+
+- アルゴリズム1は, 3つのサマリを構築する方法
+- まず, $lock(o)$ に遭遇するごとに, $\mathbb{M}_1$ の新しい item を構築し, Disabled でなければならず, 現在のクリティカルセクションを先取りできない ISR の集合を記録する (3行目)
+- 同様に, $\mathbb{M}_2$ の新しい item を作成し, ロック $o$ が取得される前に解放されていなければならないロックの集合を記録する (4行目)
+- 次に ISR を有効にする各 API 呼び出し $enable\_irq(isr)$ に対して, $s$ をガードするロックの集合 $(o, s')$ を取得し, isr がクリティカルセクション内で Enabled になる可能性があることを示すために $\mathbb{M}_1$ の対応する項目を更新する (5-7行目)
+- 最後に関数のリターン時に, $\mathbb{LS}$ と $\mathbb{RS}$ は $\mathbb{M}_3$ としてキャッシュされ, 呼び出し側で typestate を更新するために使用される (8-9行目)
+
+<br/>
+
+#### 5.2.3 Function Summary Inlining
+
+<img src="./images/algorithm2.png" class="img-50" />
+
+- すでに解析された関数の呼び出しにおいて, 呼び出し側関数内部で構築された要約は, 呼び出し側によってインライン化され, context-sensitive inter-procedural 解析を行うことができる
+- callee 関数で構築された3つのサマリ $\mathbb{M}_1', \mathbb{M}_2', \mathbb{M}_3'$ を取得する (2行目)
+- インライン化を行う前に 2つの操作を行う
+- 1つ目は, 呼び出し元ですでに無効化された ISR があり, callee 側の unit で有効かされていない場合, $\mathbb{M}_1'$ のサマリを更新し, Disable とマークする (3-5行目)
+- 2つ目は, ロックは関数の呼び出し前に解放されているものもあるため, これらの解放されたロックを callee 側の $\mathbb{M}_2'$ の各項目に挿入する (6-7行目)
+- その後, callee の $\mathbb{M}_1', \mathbb{M}_2'$ がインライン化され, $\mathbb{M}_3'$ によって現在のロックセットと割り込み状態が更新される (8-9行目)
+
+##### Example
+
+<img src="./images/figure9.png" class="img-50" />
+
+- 図9は図1の部分的な解析結果
+- clear_work_bit() が解析されると, $\mathbb{M}_1$ には $\{(condlock, s52) : \{ \} \}$ が含まれ, クリティカルセクション $(condlock, s52)$ が明示的に有効化・無効化された ISR では実行されない
+- 次に2つの caller 関数によってサマリがインライン化される
+- s5p_mfc_watchdog_worker() では ISR s5p_mfc_irq() が 184行目で無効になっているため, $\mathbb{M}_1$ は  $\{(condlock, s52) : \{ s5p\_mfc\_irq(), D\} \}$ に更新され, クリティカルセクション内のすべてのステートメントが s5p_mfc_irq() によって先取りされないことを示す
+- 逆に, enc_post_frame_start() では ISR が明示的に無効化も有効化もされていないので, サマリは更新されずにインライン化される 
