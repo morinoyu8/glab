@@ -293,6 +293,13 @@
 
 <br/>
 
+(memo)
+
+- 基本的に割り込みは Disabled でなければ起きると判定する
+- Enable は Disable を伝播させるときに, その伝播を止めるために使用する
+
+<br/>
+
 #### Definition 1
 
 - Interrupt-Aware Lock Graph (ILG) は $G = (N, E_S, E_I)$ の3つのタプルで構成される
@@ -422,3 +429,29 @@
 - 次に2つの caller 関数によってサマリがインライン化される
 - s5p_mfc_watchdog_worker() では ISR s5p_mfc_irq() が 184行目で無効になっているため, $\mathbb{M}_1$ は  $\{(condlock, s52) : \{ s5p\_mfc\_irq(), D\} \}$ に更新され, クリティカルセクション内のすべてのステートメントが s5p_mfc_irq() によって先取りされないことを示す
 - 逆に, enc_post_frame_start() では ISR が明示的に無効化も有効化もされていないので, サマリは更新されずにインライン化される 
+
+<br/>
+
+### 5.3 Interrupt Lock Graph Construction
+
+<img src="./images/algorithm3.png" class="img-50" />
+
+#### Interrupt Lock Edge Constraction
+
+- 割り込みエッジの依存関係は, 割り込みロックエッジとして捕捉される
+- 関数 $f$ 内のロック $o$ の各 unit ($\mathbb{M}_1$) とそれより優先度の高い $isr$ の間でペアワイズマッチングが実行される (2-5行目)
+- $isr$ が無効化されていない場合, $isr$ 内部の各ロック $o'$ ($\mathbb{M}_2$) に対して, 割り込みロックエッジ $o \rightsquigarrow o'$ が構築される (6-10行目)
+
+<br/>
+
+#### Legular Lock Edge Constraction
+
+- 通常のロック依存関係は通常のロックエッジとして捕捉される
+- ロック $o$ 上のロック文とすでに取得済みの各ロック $o'$ について, 通常ロックエッジ $o' \to o$ が構築される (12-14行目)
+- さらに, 関数呼び出しに対して, すでに取得済みの各ロック $o$ と callee 関数内の各ロック $o'$ との間でペアマッチングを行う
+- もし $o'$ が callee 関数内部で獲得される前に $o$ が解放されなければ, 通常ロックエッジ $o \to o'$ が構築される (15-20行目)
+
+<br/>
+
+- ILG が構築されると, 通常のサイクル検出アルゴリズムを用いて ILC を特定する
+  - ILC : 割り込みロックエッジを一つ以上含んだサイクル
