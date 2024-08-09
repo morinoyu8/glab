@@ -7,6 +7,7 @@ https://github.com/google/syzkaller
 ## ドキュメント
 
 - [How syzkaller works](docs/internals)
+- [Mutation Mechanism](mutation-mechanism)
 
 ## ソースコード解析 (読んだだけ)
 
