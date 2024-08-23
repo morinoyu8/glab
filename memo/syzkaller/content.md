@@ -8,6 +8,7 @@ syzkaller のメモ
 
 - [How syzkaller works](docs/internals)
 - [Mutation Mechanism](docs/mutation-mechanism)
+- [Fuzzing Task](docs/fuzzing-task)
 
 ## ソースコード解析 (読んだだけ)
 
