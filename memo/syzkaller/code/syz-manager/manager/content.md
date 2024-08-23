@@ -155,7 +155,8 @@ rep, vmInfo, err := mgr.runInstanceInner(ctx, inst, injectExec)
 
 ## MachineChecked
 
-- 基本的に RPCサーバで runner を作成するたびに, VM のカーネルの状態をチェックする [pkg/rpcserver/rpcserver.go](../../pkg/rpcserver/rpcserver/) の `runCheck()` : 318行目 から呼ばれそう
+- 実行開始時に一度だけ, VM のカーネルの状態をチェックする [pkg/rpcserver/rpcserver.go](../../pkg/rpcserver/rpcserver/) の `runCheck()` : 318行目 から呼ばれそう
+  - つまりファザーの obj は一つしか作られない
 
 ```go=1275
 func (mgr *Manager) MachineChecked(features flatrpc.Feature, enabledSyscalls map[*prog.Syscall]bool) queue.Source

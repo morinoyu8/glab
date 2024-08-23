@@ -89,6 +89,7 @@ func (serv *Server) handleMachineInfo(infoReq *flatrpc.InfoRequestRawT) (handsha
 ```
 
 - ここでゲストカーネルでの環境を確認し, fuzzer のオブジェクトを作成している
+- これは `infoOnce.Do` 内で呼ばれるので, 一度しか呼ばれない 
 
 ```go=270
 serv.runCheck(infoReq.Files, infoReq.Features)
