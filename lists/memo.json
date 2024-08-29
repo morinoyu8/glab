@@ -24,6 +24,10 @@
         "link": "/memo/archerfish"
     },
     {
+        "id": ".memo-devfuzz",
+        "link": "/memo/devfuzz"
+    },
+    {
         "id": ".memo-remote-settings",
         "link": "/memo/remote-settings"
     }
