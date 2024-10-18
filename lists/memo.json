@@ -28,6 +28,10 @@
         "link": "/memo/devfuzz"
     },
     {
+        "id": ".memo-printfuzz",
+        "link": "/memo/printfuzz"
+    },
+    {
         "id": ".memo-remote-settings",
         "link": "/memo/remote-settings"
     }
